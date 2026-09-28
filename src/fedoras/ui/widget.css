@@ -1,0 +1,78 @@
+/* ---------------------------------------------------------------
+   The widget shell. Every cs_class widget sits in one of these, so
+   anything here is a decision about all of them at once.
+   --------------------------------------------------------------- */
+
+.widget {
+    border: 1px solid rgba(var(--violet-rgb), 0.5);
+    border-radius: 5px;
+    padding: 0.7rem 0.9rem;
+    margin: 1.2rem 0;
+    max-width: 62ch;
+    font-family: ui-monospace, "Courier New", monospace;
+    color: var(--ink);
+}
+
+.widget:focus { outline: 1px solid rgba(var(--violet-rgb), 0.7); }
+.widget:focus-visible { outline: 1px solid rgba(var(--violet-rgb), 0.9); }
+
+/* the plate on the right of the header. every widget writes to it and
+   nothing else does, so it is the one line a reader learns to check. */
+.widget-state {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+
+.widget-source {
+    margin: 0.9rem 0 0.3rem 0;
+    border: 1px solid rgba(var(--ink-rgb), 0.35);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.widget-source-head {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3rem 0.6rem;
+    background: rgba(var(--ink-rgb), 0.10);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.75;
+}
+
+.widget-settings {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    padding: 0.6rem 0.7rem;
+    border: none;
+    border-top: 1px solid rgba(var(--ink-rgb), 0.25);
+    background: rgba(var(--ink-rgb), 0.05);
+    color: var(--ink);
+    caret-color: var(--ink);
+    resize: vertical;
+}
+
+.widget-source .live-bar { padding: 0 0.7rem 0.6rem 0.7rem; }
+
+.widget-settings-said {
+    margin: 0 0.7rem 0.5rem 0.7rem !important;
+    font-size: 0.76rem;
+    min-height: 1rem;
+    opacity: 0.7;
+}
+
+.widget-settings-broke {
+    opacity: 1;
+    color: var(--coral);
+}
+
+.widget-body { display: none; }
+.widget-body-shown { display: block; }
+
+.widget-source { margin: 0.7rem 0 0.6rem 0; }

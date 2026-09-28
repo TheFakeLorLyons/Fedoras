@@ -1,0 +1,878 @@
+/* ---------------------------------------------------------------
+   Fedoras — one palette, two schemes.
+
+   Dark is the default. Quarto puts .quarto-light on the body when the
+   reader flips the toggle, and everything below is written against
+   these variables, so a scheme change is nine lines rather than three
+   hundred.
+   --------------------------------------------------------------- */
+
+:root {
+    --paper:      #1b1d21;   /* background            */
+    --ink:        #e6e4df;   /* text                  */
+    --ink-soft:   #a9a49b;   /* secondary text        */
+    --rule:       rgba(230, 228, 223, 0.22);
+    --panel:      rgba(230, 228, 223, 0.05);
+    --violet:     #9d8dff;   /* apparatus, epigraphs  */
+    --gold:       #d0a44c;   /* beats, commits        */
+    --coral:      #e2707c;   /* moderation, rewrites  */
+    --green:      #6fcf9b;   /* the Helps             */
+    --blurple:    #8b95f0;   /* Discord               */
+
+    --violet-rgb:  157, 141, 255;
+    --gold-rgb:    208, 164, 76;
+    --coral-rgb:   226, 112, 124;
+    --green-rgb:   111, 207, 155;
+    --blurple-rgb: 139, 149, 240;
+    --ink-rgb:     168, 164, 156;
+    --panel-hard:  #101215;
+}
+
+body.quarto-light {
+    --paper:      #faf8f4;
+    --ink:        #1c1f24;
+    --ink-soft:   #6b665e;
+    --rule:       rgba(28, 31, 36, 0.22);
+    --panel:      rgba(28, 31, 36, 0.05);
+    --violet:     #6c5ce7;
+    --gold:       #b0863a;
+    --coral:      #e04f5f;
+    --green:      #2ea078;
+    --blurple:    #5865f2;
+
+    --violet-rgb:  108, 92, 231;
+    --gold-rgb:    176, 134, 58;
+    --coral-rgb:   224, 79, 95;
+    --green-rgb:   46, 160, 120;
+    --blurple-rgb: 88, 101, 242;
+    --ink-rgb:     128, 128, 128;
+    --panel-hard:  #14161a;
+}
+
+/* ---------------------------------------------------------------
+   Fedoras — screenplay typography for the HTML edition.
+   Loaded by fedoras.screenplay/assets. Edit here, rebuild, done.
+   PDF styling lives in notebooks/tex/fedoras-preamble.tex instead.
+   --------------------------------------------------------------- */
+
+.screenplay {
+    font-family: "Courier Prime", "Courier New", ui-monospace, monospace;
+    font-size: 1rem;
+    line-height: 1.35;
+    max-width: 62ch;
+    margin: 1.6rem 0 2.2rem 0;
+}
+
+.screenplay .slug {
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin: 1.6rem 0 0.8rem 0;
+}
+
+.screenplay .action {
+    margin: 0 0 0.85rem 0;
+}
+
+.action{
+    white-space: pre-line;
+}
+
+
+.screenplay .action.beat {
+    margin-bottom: 0.35rem;
+}
+
+.screenplay .dialogue {
+    margin: 0 0 0.95rem 0;
+}
+
+.screenplay .character {
+    margin: 0 0 0 12ch;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.screenplay .paren {
+    margin: 0 0 0 9ch;
+    font-style: italic;
+    opacity: 0.85;
+}
+
+.screenplay .lines {
+    margin-left: 6ch;
+    max-width: 50ch;
+}
+
+.screenplay .line {
+    margin: 0;
+}
+
+.screenplay .transition {
+    margin: 1.1rem 0 1.1rem 0;
+    text-align: right;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.screenplay .direction {
+    font-style: italic;
+    opacity: 0.85;
+    margin: 0 0 0.9rem 0;
+}
+
+/* In-world text: banners, signs, whiteboards. */
+.screenplay .sign {
+    border: 1px solid currentColor;
+    padding: 0.7rem 1rem;
+    margin: 0.9rem 0 1.1rem 4ch;
+    max-width: 46ch;
+    text-align: center;
+    letter-spacing: 0.05em;
+}
+
+.screenplay .sign p {
+    margin: 0.15rem 0;
+}
+
+.screenplay .whiteboard {
+    text-align: left;
+}
+
+.screenplay .whiteboard-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem !important;
+}
+
+.screenplay .whiteboard ol {
+    margin: 0;
+    padding-left: 2.2ch;
+}
+
+/* --- The Fedora Handbook epigraphs ------------------------------- */
+
+.handbook {
+    max-width: 54ch;
+    margin: 1.4rem 0 2rem 2ch;
+    padding-left: 1.1rem;
+    border-left: 3px solid var(--violet);
+    font-style: italic;
+}
+
+.handbook .rule-number {
+    font-style: normal;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    opacity: 0.75;
+    margin-bottom: 0.25rem;
+}
+
+.handbook .rule-text {
+    margin: 0;
+}
+
+/* --- Drafting apparatus (hidden in the reading copy) -------------- */
+
+.beats {
+    border: 1px dashed var(--gold);
+    background: rgba(var(--gold-rgb), 0.07);
+    padding: 0.6rem 0.9rem;
+    margin: 1.1rem 0;
+    max-width: 62ch;
+    font-size: 0.88rem;
+}
+
+.beats-title {
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin: 0 0 0.35rem 0;
+    opacity: 0.8;
+}
+
+.beats ul {
+    margin: 0;
+    padding-left: 1.4rem;
+}
+
+.beats.note {
+    border-color: var(--blurple);
+    background: rgba(var(--blurple-rgb), 0.07);
+}
+
+.status {
+    display: inline-block;
+    font-family: ui-monospace, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    margin: 0 0 0.8rem 0;
+}
+
+.status-outline { background: var(--ink-soft); color: #fff; }
+.status-draft   { background: var(--gold); color: #fff; }
+.status-locked  { background: var(--green); color: #fff; }
+
+/* --- Live (editable) code cells ---------------------------------- */
+
+.live-cell {
+    border: 1px solid rgba(var(--ink-rgb), 0.4);
+    border-radius: 5px;
+    padding: 0.7rem 0.8rem;
+    margin: 1.2rem 0;
+    max-width: 68ch;
+}
+
+.live-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.45rem;
+}
+
+.live-src {
+    width: 100%;
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    padding: 0.5rem;
+    border: 1px solid rgba(var(--ink-rgb), 0.35);
+    border-radius: 4px;
+    background: rgba(var(--ink-rgb), 0.06);
+    resize: vertical;
+}
+
+.live-bar {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.live-run {
+    font: inherit;
+    font-size: 0.85rem;
+    padding: 0.25rem 0.9rem;
+    border-radius: 4px;
+    border: 1px solid rgba(var(--ink-rgb), 0.5);
+    background: rgba(var(--violet-rgb), 0.15);
+    cursor: pointer;
+}
+
+.live-run:hover { background: rgba(var(--violet-rgb), 0.3); }
+
+.live-out {
+    margin: 0.5rem 0 0 0;
+    padding: 0.45rem 0.6rem;
+    min-height: 1.6rem;
+    font-size: 0.88rem;
+    white-space: pre-wrap;
+    border-left: 3px solid rgba(var(--violet-rgb), 0.6);
+    background: rgba(var(--ink-rgb), 0.06);
+}
+
+/* --- Front matter ------------------------------------------------- */
+
+.title-page {
+    text-align: center;
+    margin: 3rem 0 2rem 0;
+}
+
+.title-page .title {
+    font-family: "Courier Prime", "Courier New", monospace;
+    font-size: 3.2rem;
+    letter-spacing: 0.22em;
+    margin: 0;
+}
+
+.title-page .subtitle {
+    font-family: "Courier Prime", "Courier New", monospace;
+    letter-spacing: 0.1em;
+    margin-top: 0.8rem;
+    opacity: 0.85;
+}
+
+h1.sidebar-title,
+h2.sidebar-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.personae {
+    max-width: 66ch;
+}
+
+.personae h3 {
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    margin-top: 2rem;
+    border-bottom: 1px solid rgba(var(--ink-rgb), 0.35);
+    padding-bottom: 0.2rem;
+}
+
+.personae .who {
+    font-family: "Courier Prime", "Courier New", monospace;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    margin: 1rem 0 0.1rem 0;
+}
+
+.personae .what {
+    margin: 0 0 0.2rem 0;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.personae .desc {
+    margin: 0.15rem 0 0 0;
+    max-width: 60ch;
+}
+
+/* --- The reader's protagonist ------------------------------------ */
+
+.pc-name {
+    font-weight: inherit;
+    border-bottom: 1px dotted rgba(var(--violet-rgb), 0.55);
+}
+
+.screenplay .slug,
+.screenplay .transition,
+.screenplay .character { text-transform: uppercase; }
+
+.name-field {
+    border: 1px solid rgba(var(--violet-rgb), 0.55);
+    border-radius: 5px;
+    padding: 0.9rem 1rem;
+    margin: 1.6rem auto;
+    max-width: 60ch;
+}
+
+.name-label { margin: 0 0 0.6rem 0; }
+
+.name-inputs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.name-inputs input {
+    font: inherit;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid rgba(var(--ink-rgb), 0.45);
+    border-radius: 4px;
+    background: rgba(var(--ink-rgb), 0.06);
+    max-width: 14ch;
+}
+
+.name-note {
+    font-size: 0.82rem;
+    opacity: 0.7;
+    margin: 0.6rem 0 0 0;
+}
+
+.name-label,
+.name-confirm {
+    font-size: 1.2rem;
+}
+
+.name-inputs input,
+.name-inputs button {
+    font: inherit;
+    font-size: 1.2rem;
+}
+
+/* --- Artifacts ---------------------------------------------------- */
+
+.artifact {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    max-width: 66ch;
+    margin: 1.4rem 0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.artifact p { margin: 0.1rem 0; }
+
+/* Discord */
+.discord { border: 1px solid rgba(var(--blurple-rgb), 0.5); }
+.discord-head {
+    background: rgba(var(--blurple-rgb), 0.14);
+    padding: 0.4rem 0.8rem;
+    display: flex; gap: 0.8rem;
+}
+.discord-server { font-weight: 700; letter-spacing: 0.06em; }
+.discord-channel { opacity: 0.75; }
+.discord-body { padding: 0.7rem 0.8rem; }
+.discord-msg { margin-bottom: 0.7rem; }
+.discord-who { font-weight: 700; }
+.discord-role {
+    font-size: 0.7rem; letter-spacing: 0.08em;
+    background: rgba(var(--violet-rgb), 0.25);
+    padding: 0.05rem 0.4rem; border-radius: 3px; margin-left: 0.4rem;
+}
+.discord-at { opacity: 0.55; margin-left: 0.5rem; font-size: 0.78rem; }
+.discord-reacts { margin-top: 0.2rem !important; }
+.react {
+    display: inline-block; font-size: 0.75rem;
+    border: 1px solid rgba(var(--ink-rgb),0.35); border-radius: 10px;
+    padding: 0 0.45rem; margin-right: 0.3rem;
+}
+
+/* Moderation log */
+.modlog {
+    border-left: 3px solid var(--coral);
+    background: rgba(var(--coral-rgb), 0.08);
+    padding: 0.6rem 0.9rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+}
+
+/* Git */
+.commit {
+    border: 1px solid rgba(var(--ink-rgb), 0.4);
+    padding: 0.7rem 0.9rem;
+    background: rgba(var(--ink-rgb), 0.05);
+}
+.commit-hash { color: var(--gold); font-weight: 700; }
+.commit-meta { opacity: 0.7; }
+.commit-msg { margin-top: 0.5rem; padding-left: 1.5rem; }
+
+/* Terminal */
+.terminal {
+    background: var(--panel-hard);
+    color: var(--ink);
+    padding: 0.7rem 0.9rem;
+    border: 1px solid rgba(var(--ink-rgb),0.35);
+}
+.term-in { color: var(--green); }
+.term-in::before { content: ""; }
+.term-out { opacity: 0.9; }
+
+/* AI */
+.aichat { border: 1px solid rgba(var(--green-rgb), 0.5); }
+.ai-model {
+    background: rgba(var(--green-rgb), 0.16);
+    padding: 0.35rem 0.8rem !important;
+    font-weight: 700; letter-spacing: 0.1em; font-size: 0.75rem;
+}
+.ai-system { padding: 0.4rem 0.8rem; font-size: 0.8rem; opacity: 0.85; }
+.ai-system pre { white-space: pre-wrap; margin: 0.4rem 0 0 0; }
+.ai-body { padding: 0.6rem 0.8rem; }
+.ai-turn { margin-bottom: 0.6rem; }
+.ai-role { font-size: 0.68rem; letter-spacing: 0.12em; opacity: 0.6; }
+.ai-assistant .ai-text { border-left: 2px solid rgba(46,160,120,0.6); padding-left: 0.6rem; }
+
+/* Email */
+.email { border: 1px solid rgba(var(--ink-rgb),0.45); padding: 0.7rem 0.9rem; }
+.email-head td { padding: 0 0.6rem 0.1rem 0; vertical-align: top; font-size: 0.82rem; }
+.email-head td:first-child { opacity: 0.6; }
+.email-body { margin-top: 0.6rem; }
+
+/* Handouts */
+.handout {
+    border: 1px solid currentColor;
+    padding: 1rem 1.2rem;
+    font-family: "Courier Prime", "Courier New", monospace;
+}
+.handout-title {
+    font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    border-bottom: 1px solid currentColor; padding-bottom: 0.4rem;
+    margin-bottom: 0.7rem !important;
+}
+.handout-table { width: 100%; font-size: 0.85rem; margin: 0.5rem 0; }
+.handout-table td.k { opacity: 0.65; width: 34%; padding-right: 1rem; vertical-align: top; }
+
+/* --- Prose between scenes ---------------------------------------- */
+
+.prose {
+    max-width: 64ch;
+    margin: 1.5rem 0 2rem 0;
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino,
+                 "Book Antiqua", Georgia, serif;
+    font-size: 1.06rem;
+    line-height: 1.65;
+    color: var(--ink);
+}
+
+.prose p {
+    margin: 0 0 1.05rem 0;
+}
+
+.prose p:first-child { margin-top: 0; }
+.prose p:last-child  { margin-bottom: 0; }
+
+blockquote.turn {
+    max-width: 64ch;
+    border-left: 3px solid rgba(var(--violet-rgb), 0.6);
+    padding-left: 1rem;
+    margin: 1.4rem 0 0.6rem 0;
+}
+
+.name-confirm {
+    margin: 0.7rem 0 0 0;
+    font-weight: 600;
+}
+
+/* --- The d20 ------------------------------------------------------ */
+
+.roll {
+    border: 1px solid rgba(var(--violet-rgb), 0.5);
+    border-radius: 5px;
+    padding: 0.7rem 0.9rem;
+    margin: 1.2rem 0;
+    max-width: 60ch;
+    font-family: ui-monospace, "Courier New", monospace;
+}
+
+.roll-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    opacity: 0.75;
+    margin-bottom: 0.5rem;
+}
+
+.roll-bar { display: flex; gap: 0.7rem; align-items: center; margin-top: 0.3rem; }
+
+.roll-go, .roll-rewrite {
+    font: inherit;
+    font-size: 0.82rem;
+    padding: 0.25rem 0.9rem;
+    border-radius: 4px;
+    border: 1px solid rgba(var(--ink-rgb), 0.5);
+    background: rgba(var(--violet-rgb), 0.15);
+    cursor: pointer;
+}
+
+.roll-rewrite { background: rgba(var(--coral-rgb), 0.12); }
+.roll-go:hover { background: rgba(var(--violet-rgb), 0.3); }
+.roll-rewrite:hover { background: rgba(var(--coral-rgb), 0.25); }
+
+.roll-value { font-size: 0.9rem; letter-spacing: 0.05em; }
+
+.roll-out {
+    margin: 0.6rem 0 0 0 !important;
+    font-family: "Courier Prime", "Courier New", monospace;
+    min-height: 1.2rem;
+}
+
+.roll-echo { font-size: 0.8rem; opacity: 0.8; }
+.roll-note { font-size: 0.8rem; opacity: 0.6; margin: 0.4rem 0 0 0 !important; }
+
+.roll-foot {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    opacity: 0.55;
+    margin: 0.5rem 0 0 0 !important;
+    border-top: 1px solid rgba(var(--ink-rgb),0.25);
+    padding-top: 0.35rem;
+}
+
+.roll-cue {
+    margin: 0.6rem 0 0 4ch !important;
+    font-family: "Courier Prime", "Courier New", monospace;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.roll-line {
+    margin: 0 0 0 6ch !important;
+    max-width: 40ch;
+    font-family: "Courier Prime", "Courier New", monospace;
+}
+
+.roll-out .roll-line:first-child { margin-left: 0 !important; max-width: none; }
+
+.companion-name {
+    font-family: "Courier Prime", "Courier New", monospace;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    font-size: 1.05rem;
+    margin: 0.7rem 0 0.3rem 0 !important;
+}
+
+.companion-intro { max-width: 58ch; margin: 0 0 0.3rem 0 !important; }
+
+.session { max-width: 60ch; margin: 1.1rem 0; }
+.session-who {
+    font-family: "Courier Prime", "Courier New", monospace;
+    font-weight: 700; letter-spacing: 0.12em; margin: 0 0 0.3rem 0 !important;
+}
+.session-text { margin: 0 !important; }
+.ac-name { border-bottom: 1px dotted rgba(var(--violet-rgb), 0.55); }
+.companion-naming { margin-top: 0.6rem; }
+
+/* --- Plots -------------------------------------------------------- */
+
+.plot {
+    border: 1px solid rgba(var(--violet-rgb), 0.5);
+    border-radius: 5px;
+    padding: 0.7rem 0.9rem;
+    margin: 1.2rem 0;
+    max-width: 62ch;
+    font-family: ui-monospace, "Courier New", monospace;
+}
+
+.plot-controls {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    font-size: 0.8rem; opacity: 0.85; margin: 0.4rem 0;
+}
+
+.plot-controls input {
+    font: inherit; font-size: 0.8rem; width: 7ch;
+    padding: 0.15rem 0.35rem;
+    border: 1px solid rgba(var(--ink-rgb),0.45);
+    border-radius: 3px;
+    background: rgba(var(--ink-rgb),0.06);
+}
+
+.plot-status { font-size: 0.75rem; letter-spacing: 0.1em; opacity: 0.7; }
+
+.plot canvas {
+    display: block;
+    margin-top: 0.6rem;
+    background: var(--paper);
+    border: 1px solid rgba(var(--ink-rgb),0.3);
+    border-radius: 3px;
+}
+
+.roll-go:disabled, .roll-rewrite:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.sketch {
+    border: 1px solid rgba(var(--violet-rgb), 0.5);
+    border-radius: 5px;
+    padding: 0.7rem 0.9rem;
+    margin: 1.2rem 0;
+    max-width: 62ch;
+    font-family: ui-monospace, "Courier New", monospace;
+}
+
+.sketch canvas {
+    display: block;
+    margin-top: 0.7rem;
+    background: var(--paper);
+    border: 1px solid rgba(var(--ink-rgb),0.3);
+    border-radius: 3px;
+    max-width: 100%;
+}
+
+.sketch-page {
+    margin-top: 0.7rem;
+    padding: 0.5rem 0.6rem;
+    border: 1px solid rgba(var(--ink-rgb),0.3);
+    border-radius: 3px;
+    background: rgba(var(--ink-rgb),0.04);
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.9rem;
+}
+
+.sketch-page button {
+    font: inherit; font-size: 0.85rem;
+    border: 1px solid rgba(var(--ink-rgb),0.45);
+    border-radius: 3px;
+    background: rgba(var(--ink-rgb),0.08);
+    cursor: pointer;
+    min-width: 2ch;
+}
+
+
+/* --- The page itself, when Quarto is not doing it for us ---------- */
+
+.screenplay, .artifact, .prose, .handout, .beats, .roll, .plot, .sketch,
+.todo, .puzzle-box, .personae, .name-field, .live-cell, .session {
+    color: var(--ink);
+}
+
+.handout, .puzzle-cell, .sign { border-color: var(--rule); }
+
+.terminal { background: var(--panel-hard); color: var(--ink); }
+
+.title-page .title, .title-page .subtitle { color: var(--ink); }
+
+/* --- Form controls -------------------------------------------------
+   Inputs, textareas and buttons do not inherit colour from the page,
+   so every one of them needs telling, or the reader types black on
+   black and cannot see what they are writing.
+   ------------------------------------------------------------------- */
+
+.name-inputs input,
+.companion-input,
+.todo-input,
+.plot-controls input,
+.live-src,
+.sketch textarea,
+.sketch-page input {
+    color: var(--ink);
+    background: var(--panel);
+    border-color: var(--rule);
+    caret-color: var(--ink);
+}
+
+.name-inputs input::placeholder,
+.companion-input::placeholder,
+.todo-input::placeholder,
+.sketch-page input::placeholder,
+.live-src::placeholder {
+    color: var(--ink-soft);
+    opacity: 1;
+}
+
+.roll-go, .roll-rewrite, .live-run, .todo-del,
+.sketch-page button, .puzzle-cell {
+    color: var(--ink);
+}
+
+.sketch-page button {
+    background: var(--panel);
+    border-color: var(--rule);
+}
+
+/* Quarto's own search box does not follow the book's palette on every
+   theme, so it is told here as well. */
+
+#quarto-search input,
+#quarto-search .aa-Input,
+.aa-Form,
+.aa-InputWrapper input,
+.quarto-search input {
+    background: var(--panel) !important;
+    color: var(--ink) !important;
+    border-color: var(--rule) !important;
+}
+
+.aa-Form { border: 1px solid var(--rule) !important; }
+
+#quarto-search input::placeholder,
+.aa-Input::placeholder {
+    color: var(--ink-soft) !important;
+    opacity: 1;
+}
+
+.aa-DetachedSearchButton, .quarto-search-button {
+    background: var(--panel) !important;
+    color: var(--ink) !important;
+    border-color: var(--rule) !important;
+}
+
+/* Canvases inherit nothing, so the sketch cells read their ink off the
+   element's own resolved colour. This is the line that gives them one. */
+
+.sketch canvas, .plot canvas {
+    color: var(--ink);
+    background: transparent;
+}
+
+.tribute-heading {
+  margin: 2rem 0 0.5rem;
+  font-variant: small-caps;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.tribute p {
+  margin: 0.6rem 0;
+}
+
+.tribute-meta {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--bs-border-color);
+    text-align: right;
+    font-size: 0.85rem;
+}
+
+.tribute-meta p {
+    margin: 0.25rem 0;
+}
+
+.tribute-date {
+    font-style: italic;
+}
+
+.tribute-attribution {
+    font-size: 1rem;
+}
+
+.tribute-source {
+    margin-top: 0.75rem !important;
+}
+
+.footnote {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--bs-secondary);
+}
+
+/* ---------------------------------------------------------------
+   The three endings.
+
+   All three are in the HTML. Which one is visible is a class on
+   <body>, written once by fedoras.reader/paint-standing! from the
+   reader's standing, so a chapter that forks does it here rather than
+   in nine lines of DOM work per passage.
+
+   A page with no class on it shows the middle one. That is what the
+   print edition gets, and it is what the table actually got, and the
+   PDF reads straight through with no gap and no note.
+   --------------------------------------------------------------- */
+
+.ending { display: none; }
+
+.ending-reconciled { display: block; }
+
+body.standing-closed      .ending-reconciled { display: none; }
+body.standing-outstanding .ending-reconciled { display: none; }
+
+body.standing-closed      .ending-closed      { display: block; }
+body.standing-outstanding .ending-outstanding { display: block; }
+
+@media print {
+    .ending { display: none !important; }
+    .ending-reconciled { display: block !important; }
+}
+
+/* ---------------------------------------------------------------
+   The slips.
+   --------------------------------------------------------------- */
+
+.slip {
+    margin: 1.2rem 0 1.2rem 4ch !important;
+    padding-left: 1rem;
+    max-width: 46ch;
+    border-left: 2px solid rgba(var(--coral-rgb), 0.55);
+    font-family: "Courier Prime", "Courier New", monospace;
+    font-style: italic;
+    opacity: 0.8;
+    white-space: pre-wrap;
+}
+
+#quarto-margin-sidebar { display: none; }
+
+.scene-code {
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0.6rem 0.8rem;
+    margin: 0.9rem 0 1.1rem 0;
+    max-width: 62ch;
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    background: var(--panel);
+    color: var(--ink);
+    overflow-x: auto;
+}
+
+.scene-code pre { margin: 0; }
+.scene-code code { background: none; padding: 0; }

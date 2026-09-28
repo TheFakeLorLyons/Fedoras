@@ -1,0 +1,120 @@
+/* fedoras/legend/legend.css
+ *
+ * One key, one palette, every board.
+ *
+ * THE ALIGNMENT. Three columns per item — glyph, label, note — with the
+ * first two a fixed width, so every note in the key begins at the same
+ * x whether it is in the first column of the key or the third. The old
+ * one was flex, which sizes each item to its own text and lets them
+ * pair up wherever they fit, and that is why the right-hand column
+ * wandered about.
+ *
+ * --legend-cols is set per board. --legend-label widens the name column
+ * for a program with long names in it. */
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(var(--legend-cols, 2), minmax(0, 1fr));
+  gap: 0.12rem 1.4rem;
+  align-items: start;
+  font-size: 0.72rem;
+  line-height: 1.7;
+  margin: 0.5rem 0 0.2rem;
+}
+
+.legend-item {
+  display: grid;
+  grid-template-columns: 1.15rem var(--legend-label, 5.6rem) minmax(0, 1fr);
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.legend-glyph {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 1px solid currentColor;
+  background: rgba(128, 128, 128, 0.14);
+  flex: none;
+}
+
+.legend-glyph svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* the two that are filled rather than drawn */
+.legend-glyph.tone-you svg circle,
+.legend-glyph.tone-entity svg path,
+.legend-glyph.tone-entity svg circle { fill: currentColor; }
+.legend-glyph.tone-you svg path { fill: none; }
+
+.legend-letter {
+  font-size: 0.62rem;
+  font-weight: 600;
+  line-height: 1;
+  color: currentColor;
+}
+
+.legend-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.legend-note {
+  opacity: 0.5;
+  font-style: italic;
+  min-width: 0;
+}
+
+/* a bad one is red and its box is dashed, because somebody is reading
+   this on paper and somebody else cannot see the red at all */
+.legend-item:has(.tone-bad) .legend-note { opacity: 0.72; }
+.legend-glyph.tone-bad { border-style: dashed; }
+
+@media (max-width: 34rem) {
+  .legend { grid-template-columns: 1fr; }
+}
+
+/* ---------------------------------------------------------------------
+ * THE PALETTE
+ *
+ * Set on any ancestor. A board that wants its own look overrides one
+ * property rather than touching a renderer.
+ * ------------------------------------------------------------------ */
+
+.legend,
+.floor,
+.brk,
+.widget-rogue,
+.walk {
+  --tone-ink:    var(--ink);
+  --tone-bad:    #c0453a;
+  --tone-good:   #6f9f5e;
+  --tone-aim:    #d8a657;
+  --tone-box:    #a5794a;
+  --tone-shield: #5a86b8;
+  --tone-you:    #f2e8c4;
+  --tone-entity: #b8503f;
+}
+
+.tone-ink    { color: var(--tone-ink); }
+.tone-bad    { color: var(--tone-bad); }
+.tone-good   { color: var(--tone-good); }
+.tone-aim    { color: var(--tone-aim); }
+.tone-box    { color: var(--tone-box); }
+.tone-shield { color: var(--tone-shield); }
+.tone-you    { color: var(--tone-you); }
+.tone-entity { color: var(--tone-entity); }

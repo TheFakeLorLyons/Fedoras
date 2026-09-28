@@ -1,0 +1,17 @@
+# Built editions. Every one of these is reproducible from the spine.
+/book/
+/book-*/
+/public/
+/temp/
+/target/
+
+# Quarto leaves these next to whatever it renders.
+/**/_clay/
+/**/.quarto/
+*_files/
+
+.cpcache/
+.clj-kondo/.cache/
+.lsp/.cache/
+.nrepl-port
+.DS_Store

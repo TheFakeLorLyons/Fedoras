@@ -1,0 +1,48 @@
+/* The tribute's styles in full. This replaces the earlier tribute rules: the edge trace,
+   its ::after glow and the squiggle animation are gone. All three ran every frame, even
+   with nothing happening, and the trace also blurred on each one. Motion now comes only
+   from the pointer, through the variables the script sets. */
+
+.tribute-note {
+    --tribute-hue: 0deg;
+    --tribute-x: 0px;
+    --tribute-y: 0px;
+    --tribute-rotation: 0deg;
+    --tribute-intensity: 0;
+
+    position: relative;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin: 1.5em auto;
+
+    cursor: crosshair;
+    touch-action: none;
+
+    transform:
+        translate(var(--tribute-x), var(--tribute-y))
+        rotate(var(--tribute-rotation));
+    transition: transform 120ms ease-out;
+}
+
+svg.tribute-art {
+    display: block;
+    max-width: 100%;
+    height: auto;
+
+    /* The art was written with --ink currentColor. Set --tribute-ink to steer it. */
+    color: var(--tribute-ink, #1a1a1a);
+
+    filter:
+        hue-rotate(var(--tribute-hue))
+        saturate(calc(1 + var(--tribute-intensity) * 0.7));
+    transition: filter 180ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .tribute-note,
+    svg.tribute-art {
+        transition: none;
+    }
+}

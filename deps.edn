@@ -1,0 +1,37 @@
+{:paths ["src" "resources" "notebooks"]
+
+ :deps {org.clojure/clojure {:mvn/version "1.12.0"}
+        org.scicloj/clay    {:mvn/version "2.0.16"}
+        org.slf4j/slf4j-nop {:mvn/version "2.0.17"}
+        com.cognitect/transit-clj {:mvn/version "1.1.363"}
+        com.cognitect/transit-cljs {:mvn/version "0.8.280"}
+        metosin/malli {:mvn/version "0.20.1"}}
+
+ :aliases
+ {;; Clay's CLI: watch notebooks/ and live-reload the browser view.
+  ;;   clojure -M:clay                 ; watch + serve
+  ;;   clojure -M:clay -r              ; batch render, then exit
+  ;;   clojure -M:clay notebooks/act1/s1_move_in_day.clj
+  :clay {:main-opts ["-m" "scicloj.clay.v2.main"]}
+
+  ;; Build the whole book (HTML) -- see src/fedoras/build.clj
+  :book {:main-opts ["-m" "fedoras.build" "html"]}
+
+  ;; Build the whole book (PDF via Quarto -> LaTeX)
+  :pdf  {:main-opts ["-m" "fedoras.build" "pdf"]}
+
+  ;; Build one edition and stage it in public/ for a static host.
+  ;;   clojure -M:site act-one         ; front matter + Act I
+  ;;   clojure -M:site full            ; the whole book
+  ;; This is what the GitHub Actions workflow runs. It is separate from
+  ;; :book because :book is for writing and :site is for readers - no
+  ;; beats, no notes, no status plates, and a clean output directory.
+  :site {:main-opts ["-m" "fedoras.site"]
+         :jvm-opts ["-Xss16m"]}
+
+
+  ;; nREPL, to drive Clay from the editor instead of the CLI.
+  :nrepl {:extra-deps {nrepl/nrepl {:mvn/version "1.3.1"}
+                       cider/cider-nrepl {:mvn/version "0.50.2"}}
+          :main-opts ["-m" "nrepl.cmdline"
+                      "--middleware" "[cider.nrepl/cider-middleware]"]}}}

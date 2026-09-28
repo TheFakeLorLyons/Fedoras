@@ -1,0 +1,128 @@
+;; =====================================================================
+;; clay.edn  --  the screenplay outline.
+;;
+;; Every entry in :source-path is one \input{}. Comment a line out and
+;; the scene vanishes from the build; move a line and the scene moves.
+;; Nothing else in the project knows or cares about ordering outside 
+;; of the order present in the local file.
+;;
+;; Clay merges configuration from, in increasing priority:
+;;   1. Clay's own defaults
+;;   2. ~/.config/scicloj-clay/config.edn
+;;   3. THIS FILE
+;;   4. :clay metadata on a namespace's ns form  (per-scene overrides)
+;;   5. the argument passed to (clay/make! ...)  (see src/fedoras/build.clj)
+;; =====================================================================
+
+{:base-source-path "notebooks"
+ :base-target-path "book"
+
+ ;; Default output: Quarto -> HTML (the interactive edition).
+ ;; `clojure -M:pdf` overrides this via the :pdf alias below.
+ :format [:quarto :html]
+
+ ;; The first chapter becomes index.qmd, i.e. the cover.
+ :first-as-index true
+
+ :book {:author "Lorelai Lyons
+                 <br>
+                 <a href=
+                   'https://github.com/thefakelorlyons'>github.com/thefakelorlyons
+                 </a>"
+        :search false
+        :bread-crumbs false}
+
+ ;; -------------------------------------------------------------------
+ ;; THE SPINE
+ ;;
+ ;; While drafting one scene, you do not want to build twenty-seven 
+ ;; chapters. Leave the spine alone and use
+ ;; (fedoras.build/scene! "act1/s1_move_in_day.clj") from the REPL,
+ ;; which renders that one file as plain HTML in about a second and
+ ;; never invokes Quarto at all.
+ ;;
+ ;; :source-path ["act1/s1_move_in_day.clj"]
+ ;; -------------------------------------------------------------------
+ :source-path
+ ["index.clj"
+
+ ;; Frontmatter
+  "front/tribute.clj"
+  "front/authors_note_to_martial.clj"
+  "front/dramatis_personae.clj"
+
+  {:part "Act I — Orientation"
+   :chapters ["act1/s1_move_in_day.clj"
+              "act1/s2_the_activities_fair.clj"
+              "act1/s3_orientation.clj"
+              "act1/s4_first_week.clj"
+              "act1/s5_the_game.clj"]}
+
+  {:part "Act II — The Algorithm"
+   :chapters ["act2/s1_the_second_week.clj"
+              "act2/s2_in_season.clj"
+              "act2/s3_carrying.clj"
+              "act2/s4_guest_night.clj"
+              "act2/s5_the_boats.clj"]}
+
+  {:part "Act III — Civilization Is Collapsing"
+   :chapters ["act3/s1_the_infirmary.clj"
+              "act3/s2_second_term2.clj"
+              "act3/s3_breakout.clj"
+              "act3/s4_under_the_refectory.clj"
+              "act3/s5_not_on_anything.clj"]}
+
+  {:part "Act IV — Segmentation Fault"
+   :chapters ["act4/s1_something_that_draws_itself2.clj"
+              "act4/s2_your_own.clj"
+              "act4/s3_paint.clj"
+              "act4/s4_seat_4412.clj"
+              "act4/s5_against_the_table.clj"]}
+
+  {:part "Act V — Spring"
+   :chapters ["act5/s1_accessions_and_withdrawals.clj"
+              "act5/s2_the_angle.clj"
+              "act5/s3_the_substitution.clj"
+              "act5/s4_made_good.clj"
+              "act5/s5_held.clj"]}
+
+  {:part "Apparatus"
+   :chapters ["appendix/campus_map.clj"]}]
+
+ ;; -------------------------------------------------------------------
+ ;; Presentation
+ ;; -------------------------------------------------------------------
+ :hide-info-line true
+ :hide-ui-header true
+
+ :quarto {:highlight-style :nord
+          :format {:html {:theme {:dark "darkly" :light "cosmo"}
+                          :toc true
+                          :toc-depth 2
+                          :number-sections false
+                          :number-depth 0
+                          :code-fold false
+                          :code-tools true}}}
+
+ ;; Non-.clj files under these directories are copied next to the output,
+ ;; which is how notebooks/tex/ and any images you drop in get published.
+ :subdirs-to-sync ["notebooks" "resources/images"]
+
+ ;; -------------------------------------------------------------------
+ ;; Config aliases: reusable fragments, merged in when requested with
+ ;; {:aliases [:pdf]}. See src/fedoras/build.clj.
+ ;; -------------------------------------------------------------------
+ :pdf {:format [:quarto :pdf]
+       :base-target-path "book-pdf"
+       :quarto {:format {:pdf {:documentclass "book"
+                               :papersize "letter"
+                               :geometry ["top=1in" "bottom=1in"
+                                          "left=1.25in" "right=1in"]
+                               :include-in-header "tex/fedoras-preamble.tex"
+                               :colorlinks true
+                               :number-sections false}}}}
+
+ :draft {;; Everything, including scenes marked ^:draft, with visible
+         ;; beat sheets. See fedoras.screenplay/*show-beats*.
+         :quarto {:format {:html {:theme "darkly"}}}}}
+ 

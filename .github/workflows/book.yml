@@ -1,0 +1,110 @@
+# Build one edition of the book and publish it to GitHub Pages.
+#
+# Which edition is a workflow input, so sending Act I to first readers
+# and shipping the whole thing later is a dropdown rather than a commit.
+# Pushes to main build whatever DEFAULT_EDITION says.
+
+name: book
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      edition:
+        description: Which edition to publish
+        type: choice
+        default: act-one
+        options: [act-one, full]
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+env:
+  DEFAULT_EDITION: act-one
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Which edition
+        id: pick
+        run: echo "edition=${{ github.event.inputs.edition || env.DEFAULT_EDITION }}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: DeLaGuardo/setup-clojure@13
+        with:
+          cli: latest
+
+      # Clay hands the .qmd files to Quarto, so Quarto has to be on the
+      # runner. Without this the build writes every chapter and then
+      # fails at the last step with nothing to show for it.
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      # A cold dependency download is most of the build time. The key is
+      # the deps file, so it only re-downloads when the deps change.
+      - name: Cache Maven and gitlibs
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.gitlibs
+          key: ${{ runner.os }}-cljdeps-${{ hashFiles('deps.edn') }}
+          restore-keys: ${{ runner.os }}-cljdeps-
+
+      - name: Check the page-side sources are all present
+        run: |
+          clojure -M -e "(require '[fedoras.state :as s]) (let [r (s/verify)] (when (or (nil? (:reader r)) (seq (:missing r))) (System/exit 1)))"
+
+      # Fails the build if Scittle is not vendored. The runtime carries
+      # the reader's name, their animal, the dice and the Echo, and a
+      # published book should not fetch that from somebody else's
+      # server. Run (fedoras.site/vendor!) once and commit the file.
+      - name: Refuse to publish against a CDN
+        run: |
+          test -f resources/fedoras/vendor/scittle.js || {
+            echo "Scittle is not vendored."
+            echo "Run this once locally and commit the result:"
+            echo "  clojure -M -e \"(require '[fedoras.site :as s]) (s/vendor!)\""
+            exit 1
+          }
+          ls -l resources/fedoras/vendor/scittle.js
+
+      # site/publish! ends in site/check!, which refuses to hand over a
+      # directory with no index.html, no .nojekyll, or pages still
+      # pointing at the CDN. So this step failing is the last line of
+      # defence before a stranger opens a broken link.
+      - name: Build, stage and check
+        run: clojure -M:site ${{ steps.pick.outputs.edition }}
+
+      - name: Show what is being published
+        run: |
+          echo "edition: ${{ steps.pick.outputs.edition }}"
+          find public -maxdepth 1 | head -40
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
