@@ -1,0 +1,135 @@
+/* ---------------------------------------------------------------
+   SAND.CLJS
+
+   The canvas reads its colours off its own resolved custom properties
+   at draw time rather than at load, so the scheme toggle repaints
+   instead of leaving the board in the other scheme's palette. Which
+   means these are the whole appearance of the program, and nothing in
+   the ClojureScript contains a colour.
+
+   Fungus has three, because it has an age.
+   --------------------------------------------------------------- */
+
+.widget-sand {
+    max-width: 34rem;
+
+    --sand-sand:         #d8c9a3;
+    --sand-water:        #5a86b8;
+    --sand-oil:          #6b4f2a;
+    --sand-fire:         #e2707c;
+    --sand-steam:        #9aa0a6;
+    --sand-stone:        #7d7a74;
+    --sand-plant:        #6fa85c;
+    --sand-wood:         #8a6033;
+    --sand-ash:          #56534e;
+    --sand-glass:        #bcd4dc;
+
+    --sand-fungus:       #efe9e2;   /* new growth   */
+    --sand-fungus-old:   #8a6ba8;   /* established  */
+    --sand-fungus-dead:  #33292f;   /* spent        */
+}
+
+body.quarto-light .widget-sand {
+    --sand-sand:         #b8a274;
+    --sand-water:        #3f6fa8;
+    --sand-oil:          #4a3719;
+    --sand-fire:         #d4404f;
+    --sand-steam:        #b4b8bc;
+    --sand-stone:        #8e8b85;
+    --sand-plant:        #4d8c3c;
+    --sand-wood:         #70491f;
+    --sand-ash:          #9d9992;
+    --sand-glass:        #8fb4c0;
+
+    --sand-fungus:       #f7f4ef;
+    --sand-fungus-old:   #6f4f90;
+    --sand-fungus-dead:  #241c21;
+}
+
+.sand-canvas {
+    display: block;
+    width: 100%;
+    aspect-ratio: 120 / 72;
+    margin: 0.6rem 0 0.5rem 0;
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    image-rendering: pixelated;
+    cursor: crosshair;
+    touch-action: none;
+}
+
+/* ---------------------------------------------------------------
+   The palette is the key. Each row is a button, so the thing that
+   tells you what a substance does is the thing you press to get it.
+   --------------------------------------------------------------- */
+
+.sand-palette {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.1rem 1.1rem;
+    margin: 0.2rem 0 0.4rem 0;
+}
+
+.sand-pick {
+    display: grid;
+    grid-template-columns: 1.15rem 3.9rem minmax(0, 1fr);
+    align-items: center;
+    gap: 0.4rem;
+    width: 100%;
+    padding: 0.12rem 0.25rem;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background: none;
+    font: inherit;
+    font-size: 0.72rem;
+    line-height: 1.55;
+    text-align: left;
+    cursor: pointer;
+}
+
+.sand-pick:hover { background: rgba(var(--ink-rgb), 0.07); }
+.sand-chosen     { border-color: currentColor; background: rgba(var(--ink-rgb), 0.1); }
+
+.sand-pick .legend-glyph {
+    position: relative;
+    display: inline-flex;
+    width: 1.15rem;
+    height: 1.15rem;
+    border: 1px solid currentColor;
+    flex: none;
+}
+
+.sand-pick .legend-glyph svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* the two that are grains rather than lines */
+.sand-pick[data-pick="1"] .legend-glyph svg circle,
+.sand-pick[data-pick="10"] .legend-glyph svg circle {
+    fill: currentColor;
+    stroke: none;
+}
+
+.sand-pick .legend-label { white-space: nowrap; color: var(--ink); }
+.sand-pick .legend-note  { opacity: 0.5; font-style: italic; color: var(--ink); }
+
+.sand-counts {
+    margin: 0.1rem 0 !important;
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.8;
+    min-height: 1.2em;
+}
+
+@media (max-width: 34rem) {
+    .sand-palette { grid-template-columns: 1fr; }
+}

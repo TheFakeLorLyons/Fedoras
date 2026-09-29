@@ -1,0 +1,60 @@
+/* ---------------------------------------------------------------
+   CAMPUS.CLJ
+
+   Every direction is on the pad whether or not it goes anywhere, and
+   nothing about a dead one looks dead. That is the whole program and
+   it would be very easy to helpfully ruin it here, so: no :disabled,
+   no dimming, no cursor change, and no hover state that differs.
+   --------------------------------------------------------------- */
+
+.widget-campus { max-width: 30rem; }
+
+.campus-where {
+    margin: 0.4rem 0 0.6rem 0 !important;
+    font-size: 1.05rem;
+    letter-spacing: 0.12em;
+}
+
+.campus-pad {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.3rem;
+    max-width: 18rem;
+    margin: 0.3rem 0 0.5rem 0;
+}
+
+.campus-go {
+    font: inherit;
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
+    padding: 0.35rem 0.2rem;
+    border: 1px solid rgba(var(--ink-rgb), 0.45);
+    border-radius: 4px;
+    background: rgba(var(--ink-rgb), 0.06);
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.campus-go:hover { background: rgba(var(--ink-rgb), 0.14); }
+.campus-go:active { background: rgba(var(--violet-rgb), 0.2); }
+
+.campus-note {
+    margin: 0 0 0.4rem 0 !important;
+    font-size: 0.78rem;
+    font-style: italic;
+    opacity: 0.6;
+    min-height: 1.1em;
+}
+
+.campus-log {
+    margin: 0.5rem 0 0.2rem 0;
+    padding: 0;
+    background: none;
+    border: none;
+    font-size: 0.72rem;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.campus-log:empty { display: none; }

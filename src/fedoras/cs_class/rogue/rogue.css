@@ -1,0 +1,256 @@
+/* ---------------------------------------------------------------
+   ROGUE.CLJS
+
+   Everything is a box with a border, because that is what these
+   games look like and pretending otherwise would be a different
+   joke.
+   --------------------------------------------------------------- */
+
+.widget-rogue { max-width: 44rem; }
+
+.rogue-status {
+    margin: 0.6rem 0 0.5rem 0;
+    font-size: 0.76rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.rogue-line { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.rogue-line + .rogue-line { margin-top: 0.4rem; }
+
+.rogue-key { opacity: 0.5; letter-spacing: 0.1em; }
+
+.rogue-bar {
+    position: relative;
+    display: inline-block;
+    flex: 1;
+    min-width: 7rem;
+    height: 1.1rem;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.rogue-bar-fill { position: absolute; inset: 0 auto 0 0; }
+.rogue-hp .rogue-bar-fill { background: rgba(var(--coral-rgb), 0.5); }
+.rogue-energy .rogue-bar-fill { background: rgba(var(--violet-rgb), 0.5); }
+.rogue-xp .rogue-bar-fill { background: rgba(var(--gold-rgb), 0.45); }
+
+.rogue-bar-text {
+    position: relative;
+    display: block;
+    text-align: center;
+    line-height: 1.1rem;
+    font-size: 0.68rem;
+}
+
+.rogue-stage { margin: 0.5rem 0; }
+
+.rogue-doors { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+.rogue-door {
+    flex: 1;
+    min-width: 12rem;
+    padding: 1.4rem 0.8rem !important;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+}
+
+.rogue-door-boss { background: rgba(var(--coral-rgb), 0.2); }
+
+.rogue-foes { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+
+.rogue-foe {
+    flex: 1;
+    min-width: 9rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0.5rem 0.6rem;
+}
+
+.rogue-boss { border-color: rgba(var(--coral-rgb), 0.7); }
+
+/* down, and still on the list, because the fight is not over */
+.rogue-down { opacity: 0.35; text-decoration: line-through; }
+
+.rogue-foe-name { font-size: 0.74rem; letter-spacing: 0.06em; margin-bottom: 0.3rem; }
+.rogue-foe-note { font-size: 0.68rem; opacity: 0.55; margin-top: 0.2rem; }
+
+.rogue-shelf { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.rogue-stock {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0.4rem 0.6rem;
+}
+
+.rogue-thing { flex: 1; font-size: 0.8rem; }
+
+.rogue-offer {
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0.7rem 0.8rem;
+}
+
+.rogue-dark {
+    border-color: rgba(var(--coral-rgb), 0.6);
+    background: rgba(var(--coral-rgb), 0.07);
+}
+
+.rogue-price { font-size: 0.76rem; opacity: 0.7; margin: 0.3rem 0 0 0 !important; }
+
+.rogue-log {
+    margin: 0.5rem 0;
+    font-size: 0.74rem;
+    line-height: 1.6;
+    opacity: 0.75;
+    min-height: 6rem;
+    max-height: 9rem;
+    overflow-y: auto;
+}
+
+.rogue-log p { margin: 0 !important; }
+
+.rogue-kit {
+    border-top: 1px solid var(--rule);
+    padding-top: 0.45rem;
+    font-size: 0.72rem;
+    line-height: 1.7;
+}
+
+.rogue-kit-row { opacity: 0.85; }
+
+.rogue-quit {
+    margin-top: 0.7rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed rgba(var(--ink-rgb), 0.3);
+}
+
+/* the same size and colour as everything else, because a button that
+   looked important would be doing the reader's thinking for them */
+.rogue-stop { opacity: 0.7; }
+.rogue-stop:hover { opacity: 1; }
+
+.rogue-foe-acts {
+    display: flex;
+    gap: 0.3rem;
+    margin-top: 0.4rem;
+}
+
+.rogue-hit {
+    flex: 1;
+    font-size: 0.7rem !important;
+    padding: 0.15rem 0.4rem !important;
+}
+
+.rogue-status-line { gap: 0.5rem; }
+
+.rogue-shield {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    padding: 0.05rem 0.4rem;
+    border: 1px solid rgba(var(--blurple-rgb), 0.6);
+    border-radius: 2px;
+}
+
+.rogue-poison {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    padding: 0.05rem 0.4rem;
+    border: 1px solid rgba(var(--green-rgb), 0.6);
+    border-radius: 2px;
+    color: var(--green);
+}
+
+.rogue-from {
+    opacity: 0.45;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    margin-left: 0.4rem;
+}
+
+/* --- Damage Flashes ------------------------------------------------------
+   One frame of the exchange lasts about 140ms, so these have to be
+   quick. A transition would smear across two frames and read as a
+   glow rather than a hit.
+   ------------------------------------------------------------------- */
+
+.rogue-lit-hurt {
+    background: rgba(var(--coral-rgb), 0.3);
+    border-color: rgba(var(--coral-rgb), 0.9) !important;
+}
+
+.rogue-lit-shield {
+    background: rgba(var(--blurple-rgb), 0.3);
+    border-color: rgba(var(--blurple-rgb), 0.9) !important;
+}
+
+.rogue-lit-poison {
+    background: rgba(var(--green-rgb), 0.3);
+    border-color: rgba(var(--green-rgb), 0.9) !important;
+}
+
+/* a miss is the absence of a thing happening, so it goes grey and
+   flat rather than lighting up */
+.rogue-lit-missed {
+    opacity: 0.45;
+    background: rgba(var(--ink-rgb), 0.18);
+}
+
+.rogue-lit .rogue-foe-name { font-weight: 700; }
+
+/* the whole widget, when it is you who was hit */
+.widget-rogue { transition: box-shadow 80ms linear; }
+
+.rogue-you-hurt { box-shadow: inset 0 0 0 3px rgba(var(--coral-rgb), 0.55); }
+.rogue-you-shield { box-shadow: inset 0 0 0 3px rgba(var(--blurple-rgb), 0.55); }
+.rogue-you-poison { box-shadow: inset 0 0 0 3px rgba(var(--green-rgb), 0.55); }
+
+.rogue-foe-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+    margin-bottom: 0.3rem;
+}
+
+.rogue-foe-name { font-size: 0.74rem; letter-spacing: 0.06em; }
+
+.rogue-marks { display: flex; gap: 0.2rem; flex: none; }
+
+/* the same glyph as the key, a size down */
+.rogue-mark {
+    width: auto;
+    min-width: 1rem;
+    height: 1rem;
+    padding: 0 0.15rem;
+    border-radius: 2px;
+}
+
+.rogue-mark .legend-letter {
+    font-size: 0.58rem;
+    letter-spacing: 0.02em;
+}
+
+.rogue-legend {
+    border-top: 1px solid var(--rule);
+    padding-top: 0.4rem;
+    margin-top: 0.4rem;
+}
+
+.rogue-down {
+    opacity: 0.35;
+    text-decoration: line-through;
+}
+
+/* a thing that has stopped does not flash. whatever lit it, it is
+   over. */
+.rogue-down.rogue-lit-hurt,
+.rogue-down.rogue-lit-shield,
+.rogue-down.rogue-lit-poison,
+.rogue-down.rogue-lit-missed {
+    background: none;
+    border-color: var(--rule) !important;
+}

@@ -1,0 +1,67 @@
+/* ---------------------------------------------------------------
+   SURVEY.CLJS
+
+   The numbers carry no colour of their own. A square that has been
+   read looks the same whatever it says and whatever it said last
+   time, which is a styling decision and also the point.
+   --------------------------------------------------------------- */
+
+.widget-survey { max-width: 26rem; }
+
+.survey-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 9), 1fr);
+    gap: 2px;
+    max-width: 22rem;
+    margin: 0.7rem 0 0.5rem 0;
+    justify-content: start;
+}
+
+.survey-square {
+    aspect-ratio: 1 / 1;
+    min-height: 1.5rem;
+    padding: 0;
+    font: inherit;
+    font-size: 0.82rem;
+    line-height: 1;
+    color: var(--ink);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    background: rgba(var(--ink-rgb), 0.10);
+    cursor: pointer;
+    user-select: none;
+}
+
+.survey-square:hover { background: rgba(var(--violet-rgb), 0.18); }
+.survey-square:disabled { cursor: default; }
+.survey-square:disabled:hover { background: rgba(var(--ink-rgb), 0.10); }
+
+/* surveyed ground reads as flat, so the unsurveyed squares are the
+   ones with any texture left in them */
+.survey-clear {
+    background: none;
+    border-color: rgba(var(--ink-rgb), 0.18);
+    font-variant-numeric: tabular-nums;
+}
+.survey-clear:hover { background: none; }
+
+.survey-marked { background: rgba(var(--gold-rgb), 0.18); font-weight: 700; }
+.survey-stopped { background: rgba(var(--coral-rgb), 0.30); font-weight: 700; }
+.survey-missed { background: rgba(var(--coral-rgb), 0.12); opacity: 0.8; }
+
+/* only shown once it is over */
+.survey-right { background: rgba(var(--green-rgb), 0.24); }
+.survey-wrong { background: rgba(var(--coral-rgb), 0.18); text-decoration: line-through; }
+
+.survey-note {
+    margin: 0.2rem 0 0 0 !important;
+    font-size: 0.82rem;
+    min-height: 1.2rem;
+}
+
+.survey-record {
+    margin: 0.45rem 0 0 0 !important;
+    font-size: 0.74rem;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.6;
+}

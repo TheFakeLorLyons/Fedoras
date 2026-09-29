@@ -876,3 +876,13 @@ body.standing-outstanding .ending-outstanding { display: block; }
 
 .scene-code pre { margin: 0; }
 .scene-code code { background: none; padding: 0; }
+
+/* Pressing Enroll flashes the name it confirms, the same name or a new
+   one, so the press can be seen to have done something. */
+.name-confirm .pc-name.pc-flash {
+    animation: pc-flash 1.4s ease-out;
+}
+
+@keyframes pc-flash {
+    0%, 30% { color: var(--green); }
+}

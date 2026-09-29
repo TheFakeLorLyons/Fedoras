@@ -1,0 +1,905 @@
+/* ---------------------------------------------------------------
+   MAZE.CSS
+
+   Prefixed `maze-` throughout. `.roll-go` and `.roll-rewrite` are
+   the book's buttons and are borrowed on purpose, and `.live-bar`
+   is the book's row of them.
+
+   The floor is a plan, so it is drawn like one: ink lines, rooms as
+   cells, and colour only where colour means something. Violet is the
+   door, the key that fits it, and the building's own hand, which is
+   to say everything it moves, releases or writes. Gold is the
+   warrant. Green is the way out. Blurple is what helps the player:
+   shields, portals, boots and powerups. Coral is what costs the
+   player. Everything else is ink, because it is furniture.
+
+   What the player does is drawn at once, and what the building does
+   about it arrives a beat later, which is the joke. What moves on its
+   own is what is about to happen to the player: the entities, the
+   fire, and the room the tide takes next.
+   --------------------------------------------------------------- */
+
+.widget-maze {
+    --maze-gap: 0px;
+    max-width: 50rem;
+}
+
+.widget-maze:focus { outline: none; }
+
+/* the floor has the keys */
+.widget-maze:focus .maze-grid {
+    outline: 1px solid rgba(var(--violet-rgb), 0.45);
+    outline-offset: 5px;
+}
+
+/* --- Over the map ------------------------------------------------- */
+
+.maze-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1.2rem;
+    margin: 0.7rem 0 0 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.maze-bar-part {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 1.1rem;
+}
+
+.maze-metric {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.35rem;
+}
+
+.maze-metric-name { opacity: 0.55; }
+
+.maze-metric-value { font-weight: 600; }
+
+.maze-pips { display: inline-flex; gap: 3px; }
+
+.maze-pip {
+    width: 0.72rem;
+    height: 0.72rem;
+    box-shadow: inset 0 0 0 1px var(--ink);
+}
+
+.maze-pip.is-full { background: var(--ink); }
+
+.maze-steps { opacity: 0.75; }
+
+/* --- The floor and beside it -------------------------------------- */
+
+.maze-stage {
+    display: grid;
+    grid-template-columns: minmax(0, 34rem) minmax(10rem, 1fr);
+    gap: 1.2rem;
+    align-items: start;
+    margin: 0.8rem 0 0.5rem 0;
+}
+
+@media (max-width: 42rem) {
+    .maze-stage { grid-template-columns: minmax(0, 1fr); }
+}
+
+.maze-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 10), minmax(0, 1fr));
+    gap: var(--maze-gap);
+    user-select: none;
+    touch-action: manipulation;
+}
+
+/* --- Rooms -------------------------------------------------------- */
+
+.maze-room,
+.maze-void,
+.maze-pit {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    min-height: 1.3rem;
+}
+
+/* the floor is one floor. rooms meet without a gap, the seams between
+   them are faint, and a wall is drawn only where a room faces no room,
+   so the shape of the building is what stands out */
+.maze-room {
+    cursor: pointer;
+    background-color: rgba(var(--ink-rgb), 0.07);
+    box-shadow: inset 0 0 0 0.5px rgba(var(--ink-rgb), 0.12);
+}
+
+.maze-room:hover { filter: brightness(1.25); }
+
+.maze-room::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border: 0 solid rgba(var(--ink-rgb), 0.75);
+    pointer-events: none;
+}
+
+.maze-room.wall-n::before { border-top-width: 2px; }
+.maze-room.wall-e::before { border-right-width: 2px; }
+.maze-room.wall-s::before { border-bottom-width: 2px; }
+.maze-room.wall-w::before { border-left-width: 2px; }
+
+/* the ground. sand is grain all through, offset room by room so a
+   large stretch never repeats; ice is pale and streaked; fire glows up
+   from the bottom of each room into the gray of the floor, the rooms
+   flickering out of step */
+.maze-room.terrain-sand,
+.maze-swatch.terrain-sand {
+    background-color: color-mix(in srgb, var(--gold) 18%, transparent);
+    background-image:
+        radial-gradient(circle at 30% 40%, color-mix(in srgb, var(--gold) 75%, transparent) 0.5px, transparent 0.9px),
+        radial-gradient(circle at 70% 25%, color-mix(in srgb, var(--gold) 50%, transparent) 0.6px, transparent 1px),
+        radial-gradient(circle at 25% 75%, rgba(var(--ink-rgb), 0.22) 0.45px, transparent 0.85px),
+        radial-gradient(circle at 60% 65%, color-mix(in srgb, var(--gold) 60%, transparent) 0.4px, transparent 0.8px),
+        radial-gradient(circle at 85% 90%, rgba(255, 255, 255, 0.18) 0.5px, transparent 0.9px);
+    background-size: 3px 4px, 5px 3px, 7px 5px, 4px 7px, 6px 9px;
+    background-position: var(--jitter-x, 0) var(--jitter-y, 0);
+}
+
+.maze-room.terrain-ice,
+.maze-swatch.terrain-ice {
+    background-color: color-mix(in srgb, var(--blurple) 16%, transparent);
+    background-image: repeating-linear-gradient(135deg,
+        transparent 0 6px,
+        rgba(255, 255, 255, 0.18) 6px 7px,
+        transparent 7px 13px);
+}
+
+.maze-room.terrain-fire,
+.maze-swatch.terrain-fire {
+    background-image: linear-gradient(to top,
+        color-mix(in srgb, var(--coral) 72%, transparent),
+        color-mix(in srgb, var(--coral) 28%, transparent) 45%,
+        transparent);
+    background-position: 50% 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    animation: maze-flicker 1.6s ease-in-out infinite alternate;
+    animation-delay: var(--jitter-t, 0ms);
+}
+
+@keyframes maze-flicker {
+    from { background-size: 100% 100%; }
+    to   { background-size: 100% 80%; }
+}
+
+.maze-swatch {
+    position: absolute;
+    inset: 1px;
+}
+
+.maze-is-aiming .maze-room { cursor: not-allowed; }
+
+/* a released room was a room an hour ago. it is not a wall and it was
+   not always missing, and it should not look like either. */
+.maze-pit {
+    transform: scale(0.9);
+    opacity: 0.5;
+    outline: 1px dashed rgba(var(--ink-rgb), 0.7);
+    outline-offset: -1px;
+    background: repeating-linear-gradient(45deg,
+        transparent 0 2px,
+        rgba(var(--ink-rgb), 0.4) 2px 3px);
+}
+
+.maze-pit.is-fresh { animation: maze-release 560ms ease-in 170ms both; }
+
+@keyframes maze-release {
+    from { transform: scale(1); opacity: 1; background-color: rgba(var(--violet-rgb), 0.3); }
+    to   { transform: scale(0.9); opacity: 0.5; background-color: transparent; }
+}
+
+/* the room the tide takes next, and whether it takes it this turn */
+.maze-room.is-going {
+    background:
+        repeating-linear-gradient(45deg,
+            transparent 0 3px,
+            rgba(var(--ink-rgb), 0.16) 3px 4px),
+        rgba(var(--ink-rgb), 0.06);
+}
+
+.maze-room.is-going-now {
+    box-shadow: inset 0 0 0 1px var(--coral);
+    animation: maze-teeter 640ms ease-in-out infinite alternate;
+}
+
+@keyframes maze-teeter {
+    from { opacity: 1; }
+    to   { opacity: 0.55; }
+}
+
+.maze-room.is-lit { background: rgba(var(--violet-rgb), 0.22); }
+
+/* something a Requirement is about, which the audit could not fix */
+.maze-room.is-wrong { box-shadow: inset 0 0 0 1px var(--coral); }
+
+.maze-room.is-open-way {
+    box-shadow: inset 0 0 0 2px var(--green), 0 0 0 2px rgba(var(--green-rgb), 0.3);
+}
+
+.maze-room.is-ready-door {
+    box-shadow: inset 0 0 0 2px var(--violet), 0 0 0 2px rgba(var(--violet-rgb), 0.3);
+}
+
+.maze-room.is-rearranged { animation: maze-ring 760ms ease-out 170ms both; }
+
+@keyframes maze-ring {
+    from { box-shadow: inset 0 0 0 2px var(--violet), 0 0 0 4px rgba(var(--violet-rgb), 0.35); }
+    to   { box-shadow: inset 0 0 0 1px rgba(var(--ink-rgb), 0.55), 0 0 0 0 rgba(var(--violet-rgb), 0); }
+}
+
+.maze-room.is-struck,
+.maze-room.is-stunned { animation: maze-strike 480ms ease-out both; }
+
+@keyframes maze-strike {
+    from { background-color: rgba(var(--blurple-rgb), 0.45); }
+    to   { background-color: rgba(var(--ink-rgb), 0.06); }
+}
+
+/* where a powerup being aimed can reach */
+.maze-room.is-target {
+    cursor: crosshair;
+    background: rgba(var(--blurple-rgb), 0.16);
+    box-shadow: inset 0 0 0 2px var(--blurple);
+}
+
+/* a stun, going off */
+.maze-room.is-stunning::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 4;
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(var(--blurple-rgb), 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: maze-burst 620ms ease-out forwards;
+}
+
+@keyframes maze-burst {
+    from { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+    to   { transform: translate(-50%, -50%) scale(5); opacity: 0; }
+}
+
+/* last, so the player's room is never in doubt */
+.maze-room.is-here { box-shadow: inset 0 0 0 2px var(--ink); }
+
+/* --- Sprites ------------------------------------------------------ */
+
+.maze-sprite,
+.maze-you {
+    position: absolute;
+    display: block;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.maze-sprite {
+    top: 14%;
+    left: 14%;
+    width: 72%;
+    height: 72%;
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.maze-sprite path,
+.maze-sprite circle { fill: none; }
+
+.maze-door,
+.maze-doorway,
+.maze-key { stroke: var(--violet); }
+
+.maze-warrant { stroke: var(--gold); }
+
+.maze-way-out { stroke: var(--green); }
+
+.maze-shield,
+.maze-portal-a,
+.maze-portal-b,
+.maze-portal-in,
+.maze-portal-out,
+.maze-vanquish,
+.maze-teleport,
+.maze-stun,
+.maze-sand-boots,
+.maze-ice-boots,
+.maze-fire-boots { stroke: var(--blurple); }
+
+.maze-bear-trap,
+.maze-disturbance { stroke: var(--coral); }
+
+/* a powerup lying on the floor is filled a little, so it reads as a
+   thing to pick up rather than furniture */
+.maze-drop path,
+.maze-drop circle { fill: rgba(var(--blurple-rgb), 0.22); }
+
+/* the player is drawn filled. an entity is written, badly */
+.maze-you {
+    top: 18%;
+    left: 18%;
+    width: 64%;
+    height: 64%;
+    stroke-width: 1.4;
+    stroke-linejoin: round;
+}
+
+.maze-you { stroke: var(--ink); }
+.maze-you circle { fill: var(--ink); }
+.maze-you path { fill: none; }
+
+/* an entity is a few letters that will not hold still. the widget
+   deals it new ones a few times a second, and two copies of it, cut
+   into strips, slip out of line and back. a held or stunned one keeps
+   still, and so does its text */
+.maze-entity {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    color: var(--coral);
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    pointer-events: none;
+    animation: maze-shiver 2.6s steps(1) infinite;
+}
+
+.maze-entity::before,
+.maze-entity::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.maze-entity::before {
+    color: var(--violet);
+    animation: maze-glitch-high 1.9s steps(1) infinite;
+}
+
+.maze-entity::after {
+    color: var(--blurple);
+    animation: maze-glitch-low 1.4s steps(1) infinite;
+}
+
+.maze-entity.is-held,
+.maze-entity.is-held::before,
+.maze-entity.is-held::after { animation-play-state: paused; }
+
+.maze-entity.is-held { opacity: 0.45; }
+
+/* entities move after your next step */
+.maze-entity.is-restless {
+    animation: maze-shiver 2.6s steps(1) infinite,
+               maze-restless 700ms ease-in-out infinite alternate;
+}
+
+.maze-entity.maze-ghost { animation: maze-vanish 520ms ease-out forwards; }
+
+.maze-legend-box .maze-entity { font-size: 0.78rem; }
+
+@keyframes maze-shiver {
+    0%   { transform: none; }
+    46%  { transform: skewX(-9deg); }
+    50%  { transform: none; }
+    83%  { transform: skewX(6deg) scaleY(1.08); }
+    86%  { transform: none; }
+    100% { transform: none; }
+}
+
+@keyframes maze-restless {
+    from { translate: 0 0; }
+    to   { translate: 0 -7%; }
+}
+
+@keyframes maze-glitch-high {
+    0%   { clip-path: inset(0 0 62% 0); transform: translate(-2px, 0); }
+    18%  { clip-path: inset(30% 0 48% 0); transform: translate(2px, 0); }
+    36%  { clip-path: inset(8% 0 80% 0); transform: translate(-1px, 0); }
+    54%  { clip-path: inset(50% 0 30% 0); transform: translate(3px, 0); }
+    72%  { clip-path: inset(0 0 100% 0); transform: none; }
+    100% { clip-path: inset(0 0 100% 0); transform: none; }
+}
+
+@keyframes maze-glitch-low {
+    0%   { clip-path: inset(70% 0 0 0); transform: translate(2px, 0); }
+    25%  { clip-path: inset(55% 0 20% 0); transform: translate(-2px, 0); }
+    50%  { clip-path: inset(100% 0 0 0); transform: none; }
+    75%  { clip-path: inset(40% 0 42% 0); transform: translate(-3px, 0); }
+    100% { clip-path: inset(100% 0 0 0); transform: none; }
+}
+
+/* the powerup an entity is carrying, small in the corner of its room */
+.maze-held-power {
+    top: auto;
+    left: auto;
+    right: 3%;
+    bottom: 3%;
+    z-index: 3;
+    width: 38%;
+    height: 38%;
+}
+
+.maze-held-power path,
+.maze-held-power circle { fill: rgba(var(--blurple-rgb), 0.3); }
+
+/* turns left, written over whatever they belong to: a powerup's on the
+   right, a held or stunned entity on the left */
+.maze-count {
+    position: absolute;
+    top: 1px;
+    right: 2px;
+    z-index: 3;
+    padding: 1px 2px;
+    border-radius: 2px;
+    background: var(--panel);
+    color: var(--ink);
+    font-size: 0.56rem;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    pointer-events: none;
+}
+
+.maze-count.is-held {
+    right: auto;
+    left: 2px;
+    color: var(--coral);
+}
+
+/* --- Movement ------------------------------------------------------
+   A sprite that moved is drawn where it is now and starts from where
+   it was, `--dr` rooms down and `--dc` rooms across, then slides
+   home. The building's moves carry a `--delay`, which is the beat.
+   ------------------------------------------------------------------ */
+
+.maze-mover {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.maze-mover.is-sliding {
+    z-index: 2;
+    animation: maze-slide var(--slide, 160ms) cubic-bezier(0.25, 0.7, 0.3, 1) var(--delay, 0ms) both;
+}
+
+@keyframes maze-slide {
+    from {
+        transform: translate(calc(var(--dc, 0) * (100% + var(--maze-gap))),
+                             calc(var(--dr, 0) * (100% + var(--maze-gap))));
+    }
+    to { transform: translate(0, 0); }
+}
+
+/* a portal or a teleport is arrived at, not slid to, and a powerup
+   arrives the same way */
+.maze-mover.is-arriving { animation: maze-arrive 260ms ease-out both; }
+
+@keyframes maze-arrive {
+    from { opacity: 0; transform: scale(0.3); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* whatever was picked up, sprung, ended or faded this turn */
+.maze-ghost { animation: maze-vanish 520ms ease-out forwards; }
+
+@keyframes maze-vanish {
+    from { opacity: 0.9; transform: scale(1); }
+    to   { opacity: 0; transform: scale(1.6); }
+}
+
+/* --- The widget, as a whole ----------------------------------------
+   Two names for one flash, one for odd turns and one for even, so
+   that two hurts in a row flash twice.
+   ------------------------------------------------------------------ */
+
+.maze-hurt-a { animation: maze-hurt-a 460ms ease-out; }
+.maze-hurt-b { animation: maze-hurt-b 460ms ease-out; }
+
+@keyframes maze-hurt-a {
+    from { box-shadow: inset 0 0 0 3px rgba(var(--coral-rgb), 0.6); }
+    to   { box-shadow: inset 0 0 0 3px rgba(var(--coral-rgb), 0); }
+}
+
+@keyframes maze-hurt-b {
+    from { box-shadow: inset 0 0 0 3px rgba(var(--coral-rgb), 0.6); }
+    to   { box-shadow: inset 0 0 0 3px rgba(var(--coral-rgb), 0); }
+}
+
+.maze-is-over .maze-grid {
+    opacity: 0.6;
+    filter: grayscale(0.7);
+}
+
+.maze-is-out .maze-grid { animation: maze-leave 900ms ease-in forwards; }
+
+@keyframes maze-leave {
+    from { opacity: 1; transform: scale(1); }
+    to   { opacity: 0.15; transform: scale(0.985); }
+}
+
+/* --- Beside the floor --------------------------------------------- */
+
+.maze-side {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    min-width: 0;
+    font-size: 0.76rem;
+}
+
+.maze-status {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.maze-hands { line-height: 1.45; }
+
+.maze-clock { opacity: 0.55; }
+
+.maze-clock.is-next {
+    opacity: 1;
+    color: var(--coral);
+}
+
+.maze-over {
+    margin-top: 0.25rem;
+    padding: 0.35rem 0.5rem;
+    background: rgba(var(--coral-rgb), 0.08);
+    box-shadow: inset 2px 0 0 var(--coral);
+}
+
+.maze-over.is-out {
+    background: rgba(var(--green-rgb), 0.1);
+    box-shadow: inset 2px 0 0 var(--green);
+}
+
+.maze-powers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.maze-powers:empty { display: none; }
+
+.maze-power {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.maze-power .maze-sprite {
+    position: static;
+    width: 1rem;
+    height: 1rem;
+}
+
+.maze-power.is-on { box-shadow: inset 0 0 0 2px currentColor; }
+
+.maze-hint {
+    flex-basis: 100%;
+    margin: 0.2rem 0 0 0 !important;
+    font-size: 0.7rem;
+    font-style: italic;
+    opacity: 0.75;
+}
+
+/* rearrangement is recorded */
+.maze-record {
+    min-height: 8.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.72rem;
+    line-height: 1.5;
+}
+
+.maze-line {
+    margin: 0 0 0.2rem 0 !important;
+    padding-left: 0.5rem;
+    box-shadow: inset 2px 0 0 rgba(var(--ink-rgb), 0.25);
+    opacity: 0.6;
+}
+
+.maze-line.by-floor { box-shadow: inset 2px 0 0 var(--violet); }
+.maze-line.by-entities { box-shadow: inset 2px 0 0 var(--coral); }
+.maze-line.is-now { opacity: 1; }
+
+.maze-turn {
+    display: inline-block;
+    min-width: 1.9rem;
+    opacity: 0.5;
+    font-variant-numeric: tabular-nums;
+}
+
+.maze-remark {
+    margin: 0.3rem 0 0 0 !important;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.maze-push.is-on { box-shadow: inset 0 0 0 2px currentColor; }
+
+.maze-score {
+    margin: 0.3rem 0 0 0 !important;
+    font-size: 0.72rem;
+    opacity: 0.55;
+    font-variant-numeric: tabular-nums;
+}
+
+/* --- The wall, the window, and the key ------------------------------
+   The Requirements on the left and, beside them, a window saying what
+   the entry chosen in the key does. The key is a table of tiles
+   underneath, alike things next to one another.
+   ------------------------------------------------------------------ */
+
+.maze-lower {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0 1.5rem;
+    align-items: start;
+}
+
+@media (max-width: 42rem) {
+    .maze-lower { grid-template-columns: minmax(0, 1fr); }
+}
+
+.maze-heading {
+    margin: 1.1rem 0 0.55rem 0 !important;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.maze-req {
+    margin-left: -0.3rem;
+    padding: 0 0.3rem;
+    font-size: 0.78rem;
+    line-height: 1.65;
+    opacity: 0.55;
+    cursor: default;
+}
+
+.maze-req:hover {
+    opacity: 1;
+    background: rgba(var(--violet-rgb), 0.12);
+}
+
+.maze-req.is-new { opacity: 1; }
+
+.maze-req.is-unmet {
+    opacity: 1;
+    text-decoration: underline;
+    text-decoration-color: var(--coral);
+}
+
+.maze-req.is-broken {
+    opacity: 1;
+    text-decoration: line-through;
+}
+
+.maze-req.is-written { animation: maze-ink 1400ms ease-out both; }
+
+@keyframes maze-ink {
+    from { background: rgba(var(--violet-rgb), 0.4); }
+    to   { background: transparent; }
+}
+
+/* the window: every description is in it, stacked in one place, and
+   only the one pointed at or chosen is visible, so the window is as
+   tall as the longest description and never changes size */
+.maze-about {
+    display: grid;
+    padding: 0.55rem 0.7rem;
+    background: rgba(var(--ink-rgb), 0.04);
+    box-shadow: inset 0 0 0 1px rgba(var(--ink-rgb), 0.25);
+    font-size: 0.76rem;
+    line-height: 1.5;
+}
+
+.maze-about-layer {
+    grid-area: 1 / 1;
+    visibility: hidden;
+}
+
+.maze-about-layer.is-showing { visibility: visible; }
+
+.maze-about-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+}
+
+.maze-about-name { font-weight: 600; }
+
+.maze-about-note { margin: 0 !important; }
+
+.maze-about-count {
+    margin: 0.35rem 0 0 0 !important;
+    opacity: 0.6;
+    font-variant-numeric: tabular-nums;
+}
+
+.maze-about-hint {
+    margin: 0 !important;
+    font-style: italic;
+    opacity: 0.6;
+}
+
+/* the key folds away, above the Requirements */
+.maze-key-panel > summary {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    list-style: none;
+    cursor: pointer;
+}
+
+.maze-key-panel > summary::-webkit-details-marker { display: none; }
+
+.maze-key-panel > summary::before { content: '\25B8'; }
+
+.maze-key-panel[open] > summary::before { content: '\25BE'; }
+
+.maze-key-panel > summary::after {
+    content: 'show';
+    margin-left: auto;
+    letter-spacing: normal;
+    text-transform: none;
+}
+
+.maze-key-panel[open] > summary::after { content: 'hide'; }
+
+.maze-key-panel > summary:hover { opacity: 1; }
+
+.maze-key-panel > summary:focus-visible { outline: 1px solid var(--violet); }
+
+/* the key: one table of tiles, alike things next to one another, as
+   many to a line as fit, with no more room between them than the
+   floor leaves between its rooms */
+.maze-legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+    gap: 2px;
+}
+
+.maze-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-width: 0;
+    padding: 0.25rem 0.4rem;
+    border: 0;
+    border-radius: 0;
+    background: rgba(var(--ink-rgb), 0.05);
+    color: inherit;
+    font: inherit;
+    font-size: 0.76rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.maze-legend-item:hover { background: rgba(var(--violet-rgb), 0.14); }
+
+.maze-legend-item:focus-visible {
+    outline: 1px solid var(--violet);
+    outline-offset: -1px;
+}
+
+.maze-legend-item.is-selected {
+    background: rgba(var(--violet-rgb), 0.24);
+    box-shadow: inset 0 0 0 1px var(--violet);
+}
+
+.maze-legend-name {
+    overflow: hidden;
+    font-weight: 600;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.maze-legend-box {
+    position: relative;
+    display: inline-block;
+    flex: none;
+    width: 1.2rem;
+    height: 1.2rem;
+    background: rgba(var(--ink-rgb), 0.06);
+    box-shadow: inset 0 0 0 1px rgba(var(--ink-rgb), 0.55);
+}
+
+.maze-legend-pit {
+    position: absolute;
+    inset: 0;
+    opacity: 0.6;
+    background: repeating-linear-gradient(45deg,
+        transparent 0 2px,
+        rgba(var(--ink-rgb), 0.4) 2px 3px);
+}
+
+/* what the key lights that the other rules cannot reach: your own
+   room, and the rooms already released */
+.maze-room.is-here.is-lit {
+    box-shadow: inset 0 0 0 2px var(--violet), 0 0 0 2px rgba(var(--violet-rgb), 0.35);
+}
+
+.maze-pit.is-lit {
+    opacity: 0.9;
+    outline-color: var(--violet);
+    background-color: rgba(var(--violet-rgb), 0.18);
+}
+
+/* the special entities. the fast one leaves a trail, the strong one
+   wears a ring that breaks when it is wounded, and the thrower is
+   underlined the way a clerk underlines a threat */
+.maze-entity.is-fast {
+    font-style: italic;
+    text-shadow: -4px 0 color-mix(in srgb, var(--coral) 35%, transparent),
+                 -8px 0 color-mix(in srgb, var(--coral) 15%, transparent);
+}
+
+.maze-entity.is-strong {
+    font-size: 1.05rem;
+    font-weight: 900;
+    outline: 2px solid var(--coral);
+    outline-offset: -4px;
+}
+
+.maze-entity.is-strong.is-wounded { outline-style: dashed; }
+
+.maze-entity.is-thrower {
+    text-decoration: underline wavy var(--coral);
+    text-underline-offset: 3px;
+}
+
+.maze-legend-box .maze-entity.is-strong {
+    font-size: 0.78rem;
+    outline-width: 1px;
+    outline-offset: -2px;
+}
+
+/* where a throw, or an entity's vanquish, came from */
+.maze-room.is-throwing { animation: maze-throw 520ms ease-out both; }
+
+@keyframes maze-throw {
+    from { box-shadow: inset 0 0 0 3px var(--coral); }
+    to   { box-shadow: inset 0 0 0 0 transparent; }
+}
+
+.maze-singed { color: var(--coral); }
+
+@media (prefers-reduced-motion: reduce) {
+    .widget-maze,
+    .widget-maze * { animation: none !important; }
+}

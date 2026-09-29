@@ -1,0 +1,152 @@
+/* fedoras/cs_class/walk/walk.css
+ *
+ * Layout, and the palette.
+ *
+ * The colours are custom properties rather than literals in the
+ * ClojureScript, and the renderer reads them back out with
+ * getPropertyValue, so the look of the quad is a stylesheet decision
+ * and changing it does not mean touching a shader. Ten of them are
+ * packed into a strip of texture two pixels tall when the settings are
+ * run; the rest go up as plain uniforms. Either way, this file is
+ * where the campus is coloured.
+ *
+ * A property added here needs a matching entry in walk_world.cljs,
+ * which is the one place that knows what the names are. */
+
+.widget-walk {
+  max-width: 38rem;
+
+  --walk-sky:            #6d7f95;
+  --walk-haze:           #97a1ab;
+  --walk-sun:            #fff4dc;
+
+  --walk-lawn:           #4a6b39;
+  --walk-lawn-far:       #35502c;
+  --walk-field:          #3f5f2e;
+  --walk-field-far:      #2c4520;
+  --walk-paving:         #7b7a74;
+  --walk-paving-far:     #4e4d49;
+  --walk-road:           #3a3a3d;
+  --walk-road-far:       #232326;
+  --walk-lot:            #45444c;
+  --walk-lot-far:        #2b2a30;
+  --walk-centreline:           #9c7a29;
+  --walk-centreline-far:       #5c481c;
+  --walk-rail:           #4a4741;
+  --walk-rail-far:       #2b2925;
+  --walk-fill:           #5a5148;
+  --walk-fill-far:       #39332c;
+  --walk-brook:          #345c70;
+  --walk-brook-far:      #223c49;
+  --walk-streambed:      #4a4034;
+  --walk-streambed-far:  #2e281f;
+  --walk-road-mark:      #d8d3c4;
+  --walk-road-mark-far:  #8f8b7c;
+
+  /* three shades, and the mortar between them */
+  --walk-brick-a:        #8d3f34;
+  --walk-brick-b:        #733029;
+  --walk-brick-c:        #a35a48;
+  --walk-mortar:         #b9b0a2;
+  --walk-face:           #8d3f34;   /* what a wall too far off to brick is */
+  --walk-roof:           #43423f;
+
+  --walk-leaf:           #3f6b34;
+  --walk-leaf-lit:       #5c8f45;
+  --walk-bark:           #4a3a2c;
+  --walk-bush:           #3a5f30;
+  --walk-bush-lit:       #557f3f;
+
+  --walk-water:          #3c6f86;
+  --walk-foam:           #d8e6ec;
+  --walk-stone:          #9a958a;
+  --walk-slate:          #e4e2dc;
+  --walk-glass:          #9fc2d2;
+  --walk-post:           #5b5a55;
+  --walk-lamp:           #7fb2e0;
+  --walk-lamp-lit:       #f2c14a;
+}
+
+body.quarto-light .widget-walk {
+  --walk-sky:            #8fa6bd;
+  --walk-haze:           #c3cbd3;
+
+  --walk-lawn:           #5f8447;
+  --walk-lawn-far:       #7d9a6c;
+  --walk-field:          #567c3c;
+  --walk-field-far:      #6f9159;
+  --walk-paving:         #9a9891;
+  --walk-paving-far:     #b6b4ad;
+  --walk-road:           #46464a;
+  --walk-road-far:       #6f6f74;
+  --walk-lot:            #52515a;
+  --walk-lot-far:        #7b7a83;
+  --walk-centreline:           #b8902f;
+  --walk-centreline-far:       #cdad63;
+  --walk-rail:           #55514a;
+  --walk-rail-far:       #7d7870;
+  --walk-fill:           #6b6155;
+  --walk-fill-far:       #948b7e;
+  --walk-brook:          #3a6c84;
+  --walk-brook-far:      #6d95a7;
+  --walk-streambed:      #5d5142;
+  --walk-streambed-far:  #877a67;
+  --walk-road-mark:      #f2efe6;
+  --walk-road-mark-far:  #dcd8cc;
+
+  --walk-brick-a:        #a04a3c;
+  --walk-brick-b:        #8a3b31;
+  --walk-brick-c:        #b96b56;
+  --walk-mortar:         #ddd5c8;
+  --walk-face:           #a04a3c;
+  --walk-roof:           #6d6b66;
+
+  --walk-leaf:           #588f43;
+  --walk-leaf-lit:       #76ad57;
+  --walk-bush:           #4f8039;
+  --walk-bush-lit:       #6da04e;
+
+  --walk-water:          #5b93aa;
+  --walk-stone:          #b3ada1;
+  --walk-slate:          #f4f2ec;
+  --walk-glass:          #b9d6e2;
+}
+
+/* The far shade is what a surface fades toward at the draw distance,
+   which in a dark scheme means darker and in a light one means paler.
+   Getting that backwards is the commonest way to make a quad that
+   looks like it is on fire at the horizon. */
+
+.walk-canvas {
+  display: block;
+  width: 100%;
+  max-width: 34rem;
+  margin: 0.6rem 0 0.4rem 0;
+  border: 1px solid var(--rule, var(--ink));
+  background: var(--walk-haze);
+  image-rendering: pixelated;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.walk-canvas:focus { outline: 2px solid var(--violet); outline-offset: 1px; }
+
+.widget-walk:focus, .widget-walk:focus-visible { outline: none; }
+.widget-walk:focus .walk-canvas { box-shadow: 0 0 0 2px var(--ink); }
+
+.walk-where {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.78rem;
+  opacity: 0.75;
+}
+
+.walk-ahead {
+  font-size: 0.8rem;
+  margin: 0.2rem 0 0.2rem !important;
+  min-height: 1.2em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* the only thing on this quad that tells anybody off, and it does
+   nothing about it */
+.walk-keep-off { font-style: italic; opacity: 0.6; }

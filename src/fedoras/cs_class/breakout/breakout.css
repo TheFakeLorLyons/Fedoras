@@ -1,0 +1,93 @@
+/* ---------------------------------------------------------------
+   BRICKS.CLJS
+
+   Three colours. The ink most of it is drawn in, the grey a brick
+   turns when it cannot be broken, and the red a drop turns when it is
+   worse than nothing.
+
+   The canvas reads all three off its own resolved custom properties at
+   draw time, so the scheme toggle repaints instead of leaving the wall
+   in the other scheme's colours, and nothing in the ClojureScript
+   contains a colour.
+   --------------------------------------------------------------- */
+
+.widget-breakout {
+    max-width: 34rem;
+
+    --brk-ink:   var(--ink);
+    --brk-fixed: #7d7a74;
+    --brk-bad:   #c0453a;
+}
+
+body.quarto-light .widget-breakout {
+    --brk-fixed: #9d9992;
+    --brk-bad:   #c0392b;
+}
+
+.brk-canvas {
+    display: block;
+    width: 100%;
+    aspect-ratio: 100 / 70;
+    margin: 0.6rem 0 0.5rem 0;
+    background: rgba(var(--ink-rgb), 0.05);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    cursor: none;
+    touch-action: none;
+}
+
+.brk-counts {
+    margin: 0.1rem 0 !important;
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.8;
+    min-height: 1.2em;
+}
+
+/* ---------------------------------------------------------------
+   The key. Not a palette — there is nothing to choose. Which one you
+   get is not his decision and that is the whole of why they are in the
+   wall in the first place.
+   --------------------------------------------------------------- */
+
+.brk-key {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.1rem 1.1rem;
+    margin: 0.35rem 0 0.3rem 0;
+}
+
+.brk-drop {
+    display: grid;
+    grid-template-columns: 1.15rem 3.4rem minmax(0, 1fr);
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: var(--brk-ink);
+}
+
+.brk-drop .legend-glyph {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.15rem;
+    height: 1.15rem;
+    border: 1px solid currentColor;
+    flex: none;
+}
+
+.brk-letter { font-size: 0.62rem; font-weight: 600; line-height: 1; }
+
+.brk-drop .legend-label { white-space: nowrap; }
+.brk-drop .legend-note  { opacity: 0.5; font-style: italic; }
+
+/* worse than nothing: red, and dashed, because somebody is reading
+   this on paper and somebody else cannot see the red at all */
+.brk-bad { color: var(--brk-bad); }
+.brk-bad .legend-glyph { border-style: dashed; }
+.brk-bad .legend-note { opacity: 0.75; }
+
+@media (max-width: 34rem) {
+    .brk-key { grid-template-columns: 1fr; }
+}

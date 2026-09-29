@@ -1,0 +1,145 @@
+/* ---------------------------------------------------------------
+   PAINT.CLJS
+
+   The canvas reads its inks off its own resolved custom properties at
+   paint time rather than at load, so the scheme toggle repaints
+   instead of leaving the marks in the other scheme's colours.
+
+   The six inks are the book's own six. There is no colour in this
+   program that is not already somewhere else in it.
+   --------------------------------------------------------------- */
+
+.widget-paint { max-width: 34rem; }
+
+.paint-canvas {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0.6rem 0 0.5rem 0;
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    color: var(--ink);
+    cursor: crosshair;
+    touch-action: none;
+}
+
+.paint-withdrawing .paint-canvas { cursor: cell; }
+
+/* ---------------------------------------------------------------
+   The palettes
+   --------------------------------------------------------------- */
+
+.paint-tools, .paint-inks {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+}
+
+.paint-inks { margin-left: auto; }
+
+.paint-pick {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    padding: 0;
+    border: 1px solid rgba(var(--ink-rgb), 0.4);
+    border-radius: 4px;
+    background: none;
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.paint-pick svg {
+    display: block;
+    width: 1.05rem;
+    height: 1.05rem;
+    overflow: visible;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* only there for the two tools it means anything to */
+.paint-fill {
+    align-items: center;
+    height: 1.7rem;
+    padding: 0 0.55rem;
+    border: 1px solid rgba(var(--ink-rgb), 0.4);
+    border-radius: 4px;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+}
+
+.paint-swatch {
+    width: 1.25rem;
+    height: 1.25rem;
+    padding: 0;
+    border: 1px solid rgba(var(--ink-rgb), 0.4);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.paint-pick:hover, .paint-swatch:hover, .paint-fill:hover {
+    border-color: var(--ink);
+}
+
+.paint-chosen {
+    border-color: var(--violet);
+    box-shadow: 0 0 0 1px var(--violet);
+}
+
+/* ---------------------------------------------------------------
+   The dials
+   --------------------------------------------------------------- */
+
+.paint-dials { flex-wrap: wrap; row-gap: 0.35rem; }
+
+.paint-control {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    opacity: 0.8;
+}
+
+.paint-control input[type="range"] {
+    width: 4.2rem;
+    accent-color: var(--violet);
+}
+
+/* ---------------------------------------------------------------
+   The counts and the ledger
+   --------------------------------------------------------------- */
+
+.paint-points {
+    margin: 0.1rem 0 !important;
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.6;
+    opacity: 0.8;
+}
+
+.paint-ledger {
+    margin: 0.55rem 0 0.2rem 0;
+    font-size: 0.74rem;
+    line-height: 1.7;
+}
+
+.paint-record { display: flex; gap: 0.7rem; }
+.paint-n { width: 3ch; text-align: right; opacity: 0.5; }
+.paint-what { flex: 1; }
+.paint-when { opacity: 0.6; font-style: italic; white-space: nowrap; }
+
+/* withdrawn, and still on the list, which is the point */
+.paint-struck { opacity: 0.55; text-decoration: line-through; }
+.paint-nothing { opacity: 0.45; font-style: italic; }

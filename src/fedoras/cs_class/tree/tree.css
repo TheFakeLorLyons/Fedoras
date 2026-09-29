@@ -1,0 +1,51 @@
+/* ---------------------------------------------------------------
+   TREE.CLJS
+
+   Two colours now, and the line between them is depth: the trunk is
+   the first call and the tips are the last ones, and everything in
+   between is a mix worked out from how far down it was found. The
+   rule was never told about any of this. It does not know how deep
+   it is even while it is being it.
+
+   Swap either of these for var(--violet) or var(--gold) if you want
+   the thing to stop pretending to be a tree. It is not one, and the
+   restraint here is a choice rather than a fact about the drawing.
+
+   touch-action and overscroll-behavior are here so that scrolling on
+   the canvas zooms the drawing rather than the page. The handler
+   calls preventDefault, but these stop the browser deciding it knew
+   better before the handler is reached.
+   --------------------------------------------------------------- */
+
+.widget-tree {
+    max-width: 30rem;
+
+    --tree-trunk: #7d5a3c;
+    --tree-tip:   var(--ink);
+}
+
+body.quarto-light .widget-tree {
+    --tree-trunk: #6b4a2c;
+}
+
+.tree-canvas {
+    display: block;
+    width: 100%;
+    max-width: 26rem;
+    aspect-ratio: 1 / 1;
+    margin: 0.6rem 0 0.5rem 0;
+    background: rgba(var(--ink-rgb), 0.04);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    cursor: crosshair;
+    touch-action: none;
+    overscroll-behavior: contain;
+}
+
+.tree-counts {
+    margin: 0.1rem 0 !important;
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.7;
+    min-height: 1.2em;
+}

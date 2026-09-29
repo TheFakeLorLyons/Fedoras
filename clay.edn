@@ -56,38 +56,44 @@
               "act1/s2_the_activities_fair.clj"
               "act1/s3_orientation.clj"
               "act1/s4_first_week.clj"
-              "act1/s5_the_game.clj"]}
+              "act1/s5_the_game.clj"]
+   }
 
   {:part "Act II — The Algorithm"
    :chapters ["act2/s1_the_second_week.clj"
               "act2/s2_in_season.clj"
               "act2/s3_carrying.clj"
               "act2/s4_guest_night.clj"
-              "act2/s5_the_boats.clj"]}
+              "act2/s5_the_boats.clj"]
+   }
 
   {:part "Act III — Civilization Is Collapsing"
    :chapters ["act3/s1_the_infirmary.clj"
-              "act3/s2_second_term2.clj"
+              "act3/s2_second_term.clj"
               "act3/s3_breakout.clj"
               "act3/s4_under_the_refectory.clj"
-              "act3/s5_not_on_anything.clj"]}
+              "act3/s5_not_on_anything.clj"]
+   }
 
   {:part "Act IV — Segmentation Fault"
    :chapters ["act4/s1_something_that_draws_itself2.clj"
               "act4/s2_your_own.clj"
               "act4/s3_paint.clj"
               "act4/s4_seat_4412.clj"
-              "act4/s5_against_the_table.clj"]}
+              "act4/s5_against_the_table.clj"]
+   }
 
   {:part "Act V — Spring"
    :chapters ["act5/s1_accessions_and_withdrawals.clj"
               "act5/s2_the_angle.clj"
               "act5/s3_the_substitution.clj"
               "act5/s4_made_good.clj"
-              "act5/s5_held.clj"]}
+              "act5/s5_held.clj"]
+   }
 
   {:part "Apparatus"
-   :chapters ["appendix/campus_map.clj"]}]
+   :chapters ["appendix/campus_map.clj"]
+   }]
 
  ;; -------------------------------------------------------------------
  ;; Presentation

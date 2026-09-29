@@ -410,8 +410,11 @@
            "who do not pass review."
            "Dining Dollars do not roll over."]}])
 
- (sp/action "It took {pc} nineteen minutes to find the auditorium this morning"
-            "and he was inside the building for eleven of them.")
+(sp/action "{pc} got lost on the way to the auditorium, but found that it "
+           " was the only thing he wanted to hold on to from that morning. "
+           "He thought about it again in the afternoon and wrote down what "
+           "he had remembered of the walk. It was not much. He opened"
+           "a file:")
 
  (sp/code
   "(def campus
@@ -436,9 +439,10 @@
 
  (sp/code "(reduce go :whitlock [:out :west :east])")
 
- (sp/action "It does not tell {pc} that he cannot go west. It puts him back"
-            "where he was and says nothing, and he does not notice, because"
-            "that is what a building does.")
+ (sp/action "The program doesn't indicate anything about 'invalid movement'. "
+            "It returns the last 'valid' position and says nothing else. "
+            "For a fleeting moment, {pc} has an insight that you can "
+            "really only be lost in a place if you have a place to be.")
 
  (live/editable
   {:label "campus.clj" :rows 16}

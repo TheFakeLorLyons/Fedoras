@@ -199,7 +199,16 @@
                                 (fn [_]
                                   (fedoras.reader/set-name!
                                    (.-value (.getElementById js/document "pc-first"))
-                                   (.-value (.getElementById js/document "pc-last"))))))
+                                   (.-value (.getElementById js/document "pc-last")))
+                                  ;; a frame later, once the name has been repainted, flash
+                                  ;; it; taking the class off and reading the width first
+                                  ;; restarts the flash on a second press
+                                  (js/requestAnimationFrame
+                                   (fn []
+                                     (when-let [confirmed (.querySelector js/document ".name-confirm .pc-name")]
+                                       (.remove (.-classList confirmed) "pc-flash")
+                                       (.-offsetWidth confirmed)
+                                       (.add (.-classList confirmed) "pc-flash")))))))
                         (when-let [b (.querySelector js/document ".pc-forget")]
                           (set! (.-onclick b) (fn [_] (fedoras.reader/forget!))))))]))
 

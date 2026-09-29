@@ -1,0 +1,58 @@
+/* ---------------------------------------------------------------
+   SLOTS.CLJS
+
+   The reel is large, the purse is next, and the three lines that
+   would have told you anything are small and grey underneath. That
+   is the order of attention the machine itself is built to produce,
+   and the stylesheet does not fight it.
+
+   The purse gets the gold, because that is what a machine like this
+   makes you look at: a number going up, sitting directly on top of a
+   number going down, in the same line, in the same colour.
+
+   The career line is smaller than the purse and larger than the
+   rates, which is roughly how much thought anybody gives to how many
+   of these they have sat down at.
+   --------------------------------------------------------------- */
+
+.widget-slots {
+    max-width: 32rem;
+}
+
+.slots-row {
+    margin: 0.7rem 0 0.4rem 0 !important;
+    font-size: 2rem;
+    letter-spacing: 0.25em;
+    line-height: 1.2;
+}
+
+.slots-purse {
+    margin: 0.2rem 0 0.2rem 0 !important;
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--gold);
+}
+
+.slots-career {
+    margin: 0.1rem 0 !important;
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.9;
+    letter-spacing: 0.02em;
+}
+
+.slots-tally,
+.slots-rates {
+    margin: 0.1rem 0 !important;
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.slots-tally {
+    opacity: 0.75;
+}
+
+.slots-rates {
+    opacity: 0.55;
+    min-height: 1.2em;
+}

@@ -1,0 +1,38 @@
+/* ---------------------------------------------------------------
+   SHOOT.CLJS
+
+   No canvas here, so no CSS-variable lookups from JS to worry about —
+   the read tag is just a class. It's coloured the same gold the
+   quests use, on purpose: it's the same idea, the one moment
+   something in this book is looking back at you.
+   --------------------------------------------------------------- */
+
+.widget-shoot {
+    max-width: 30rem;
+}
+
+.shoot-tally,
+.shoot-reads {
+    margin: 0.1rem 0 !important;
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.shoot-reads {
+    opacity: 0.75;
+}
+
+.shoot-log {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+.shoot-log-line {
+    opacity: 0.85;
+}
+
+.shoot-read {
+    color: var(--gold);
+    font-weight: 600;
+}

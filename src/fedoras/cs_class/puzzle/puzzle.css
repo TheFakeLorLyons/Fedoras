@@ -1,0 +1,71 @@
+/* ---------------------------------------------------------------
+   SLIDE.CLJS
+
+   THIS FILE IS THE REASON THE BOARD IS A BOARD. Sixteen divs with no
+   rules on them are sixteen numbers in a column, one under the next,
+   which is what this widget rendered as for as long as it had no
+   stylesheet of its own.
+   --------------------------------------------------------------- */
+
+.widget-puzzle { max-width: 24rem; }
+
+.puzzle-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+    width: 100%;
+    max-width: 17rem;
+    margin: 0.7rem 0 0.5rem 0;
+}
+
+.puzzle-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    font: inherit;
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--ink);
+    border-radius: 3px;
+    background: rgba(var(--ink-rgb), 0.08);
+    color: var(--ink);
+    cursor: pointer;
+    padding: 0;
+}
+
+.puzzle-cell:hover { background: rgba(var(--ink-rgb), 0.18); }
+
+/* a tile that is where it belongs. no announcement, just a heavier
+   line, so a reader watching the solver sees the board fill in from
+   the top without being told that is what is happening. */
+.puzzle-home {
+    border-color: var(--violet);
+    background: rgba(var(--violet-rgb), 0.12);
+}
+
+.puzzle-hole {
+    border: 1px dashed rgba(var(--ink-rgb), 0.4);
+    background: none;
+    cursor: default;
+}
+
+.puzzle-note {
+    margin: 0.1rem 0 !important;
+    font-size: 0.78rem;
+    opacity: 0.75;
+    min-height: 1.2em;
+}
+
+/* the still boards in the chapter, which have no buttons in them */
+.puzzle {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+    width: 100%;
+    max-width: 17rem;
+    margin: 0.7rem 0;
+}
+
+.puzzle .puzzle-cell { cursor: default; }

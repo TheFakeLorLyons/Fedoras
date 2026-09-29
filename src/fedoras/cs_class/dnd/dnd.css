@@ -1,0 +1,196 @@
+/* ---------------------------------------------------------------
+   Session Four. Everything here is inside a .widget shell, so the
+   border, the header and the source panel are already handled and
+   nothing below re-states them.
+   --------------------------------------------------------------- */
+
+.widget-dnd .dnd-log {
+    max-height: 26rem;
+    overflow-y: auto;
+    padding-right: 0.4rem;
+    margin: 0.5rem 0;
+}
+
+.widget-dnd .dnd-said {
+    margin: 0 0 0.9rem 6ch !important;
+    max-width: 46ch;
+    font-family: "Courier Prime", "Courier New", monospace;
+    white-space: pre-wrap;
+}
+
+.widget-dnd .dnd-die { text-align: center; }
+
+.widget-dnd .dnd-thinking {
+    font-style: italic;
+    opacity: 0.6;
+    margin-left: 6ch;
+}
+
+.widget-dnd .dnd-end {
+    text-align: center;
+    opacity: 0.6;
+    letter-spacing: 0.15em;
+    margin-top: 1rem;
+}
+
+/* A second of somewhere else, for the reader and nobody at the table.
+   Set apart and never labelled, because nothing labels it. */
+
+.widget-dnd .slip {
+    margin: 1.2rem 0 1.2rem 4ch !important;
+    padding-left: 1rem;
+    max-width: 46ch;
+    border-left: 2px solid rgba(var(--coral-rgb), 0.55);
+    font-family: "Courier Prime", "Courier New", monospace;
+    font-style: italic;
+    opacity: 0.8;
+    white-space: pre-wrap;
+}
+
+/* The one thing in this building that has never been wrong, kept in
+   front of the reader for the whole session. */
+
+.widget-dnd .dnd-animal {
+    margin: 0.3rem 0 0.6rem 0 !important;
+    padding-left: 0.7rem;
+    border-left: 2px solid rgba(var(--green-rgb), 0.6);
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    opacity: 0.85;
+}
+
+/* Choices are the reader's own words and one tap says them, so they
+   are shaped like something you might say rather than like a control. */
+
+.widget-dnd .dnd-choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.5rem 0 0.2rem 0;
+}
+
+.widget-dnd .dnd-choice {
+    font: inherit;
+    font-size: 0.82rem;
+    font-family: "Courier Prime", "Courier New", monospace;
+    text-align: left;
+    padding: 0.22rem 0.75rem;
+    border-radius: 12px;
+    border: 1px dotted rgba(var(--violet-rgb), 0.6);
+    background: none;
+    color: var(--ink);
+    cursor: pointer;
+    opacity: 0.88;
+}
+
+.widget-dnd .dnd-choice:hover {
+    background: rgba(var(--violet-rgb), 0.14);
+    opacity: 1;
+}
+
+/* One line per approach with its number showing, because the numbers
+   are the description: a door with a fifteen to force and a twelve to
+   pick is a different door from one with them the other way round. */
+
+.widget-dnd .dnd-rolls {
+    border: 1px solid rgba(var(--violet-rgb), 0.4);
+    border-radius: 4px;
+    padding: 0.5rem 0.7rem;
+    margin: 0.6rem 0;
+}
+
+.widget-dnd .dnd-rolls-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    opacity: 0.7;
+    margin: 0 0 0.4rem 0 !important;
+}
+
+.widget-dnd .roll-approach {
+    flex: 1;
+    font-size: 0.82rem;
+    opacity: 0.9;
+}
+
+.widget-dnd .dnd-cost {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    opacity: 0.55;
+}
+
+/* What Miles has written down, which is the only record of this session
+   anybody will be able to read afterwards. Nothing is put in here by
+   the page. */
+
+.widget-dnd .dnd-ledger {
+    border: 1px solid rgba(var(--gold-rgb), 0.45);
+    background: rgba(var(--gold-rgb), 0.05);
+    border-radius: 4px;
+    padding: 0.55rem 0.8rem;
+    margin: 0.8rem 0 0.4rem 0;
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.widget-dnd .dnd-ledger p { margin: 0.1rem 0; }
+
+.widget-dnd .dnd-ledger-title {
+    font-variant: small-caps;
+    letter-spacing: 0.12em;
+    opacity: 0.7;
+    margin-bottom: 0.35rem !important;
+}
+
+/* A word is marked because Miles wrote it down, not because the page
+   decided it was important. */
+
+.widget-dnd .kept {
+    border-bottom: 1px solid rgba(var(--gold-rgb), 0.7);
+}
+
+.widget-dnd .dnd-foot {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    opacity: 0.55;
+    margin: 0.5rem 0 0 0 !important;
+    border-top: 1px solid rgba(var(--ink-rgb), 0.25);
+    padding-top: 0.35rem;
+}
+
+/* What the reader is, on one line, because Owen tried to cast a
+   fireball as a ranger and Victor had to say so out loud for the
+   fourth time. Every value here is already in fedoras.reader. */
+
+.widget-dnd .dnd-sheet {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.1rem;
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(var(--ink-rgb), 0.25);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    opacity: 0.7;
+}
+
+.widget-dnd .dnd-sheet-name {
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    opacity: 1;
+}
+
+.widget-dnd .dnd-sheet-mod { font-variant-numeric: tabular-nums; }
+
+/* Narrow screens. The bar has four controls in it and the transcript
+   is indented six characters, and neither survives a phone. */
+
+@media (max-width: 34rem) {
+    .widget-dnd .dnd-said { margin-left: 2ch !important; max-width: none; }
+    .widget-dnd .slip { margin-left: 1ch !important; max-width: none; }
+    .widget-dnd .dnd-thinking { margin-left: 2ch; }
+    .widget-dnd .live-bar { flex-wrap: wrap; }
+    .widget-dnd .live-bar .todo-input { flex: 1 0 100%; }
+    .widget-dnd .dnd-choice { flex: 1 0 100%; }
+    .widget-dnd .dnd-approach { flex-wrap: wrap; }
+}

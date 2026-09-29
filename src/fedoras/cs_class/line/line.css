@@ -1,0 +1,74 @@
+
+.widget-line {
+    max-width: 30rem;
+ 
+    --line-ink:   var(--ink);
+    --line-cable: var(--violet);
+    --line-silt:  #3a3630;
+    --line-quest-1: var(--gold);
+    --line-quest-2: #6fa8a0;
+    --line-quest-3: #b8788f;
+    --line-pause-scrim: rgba(8, 8, 10, 0.6);
+    --line-pause-text:  #f2efe8;
+}
+ 
+body.quarto-light .widget-line {
+    --line-silt: #cfc8bd;
+}
+ 
+.line-canvas {
+    display: block;
+    width: 100%;
+    max-width: 26rem;
+    aspect-ratio: 1 / 1;
+    margin: 0.6rem 0 0.5rem 0;
+    background: rgba(var(--ink-rgb), 0.05);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    touch-action: none;
+    cursor: crosshair;
+}
+ 
+.line-legend-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    min-height: 0.75rem;
+    margin: 0.4rem 0 0 0;
+}
+ 
+.line-legend {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    flex: 0 0 auto;
+}
+ 
+.line-legend-chip {
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    flex: 0 0 auto;
+}
+ 
+.line-stats {
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.85;
+}
+ 
+.widget-line:focus .line-canvas,
+.widget-line:focus-visible .line-canvas {
+    box-shadow: 0 0 0 2px rgba(var(--violet-rgb), 0.55);
+}
+ 
+.line-counts {
+    margin: 0.1rem 0 !important;
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.75;
+    min-height: 1.2em;
+}
+ 

@@ -1,0 +1,513 @@
+{:title "Fedoras"
+ :subtitle "A screenplay with code"
+ :byline "The author, the reader, and the machine"
+
+ :acts
+ [{:act 1
+   :title "Arrival"
+   :notes ["The institution presents itself as normal."
+           "The MC is provisional, lonely, and beginning to code."
+           "The D&D game begins, a week ahead of the main plot."]
+
+   :scenes
+   [{:scene 1
+     :title "Move-in Day"
+     :beats
+     [{:id :chad
+       :type :world
+       :summary "MC meets Chad and the ordinary absurdity of the campus."
+       :notes ["Chad is not a villain. He is a product."
+               "The football is not the point. The thinking part is."]}
+      {:id :fedora-society
+       :type :character
+       :summary "Victor recruits MC and the Fedora Society appears."
+       :notes ["Victor is cringe but not stupid."
+               "The Society is both a home and a warning."]}
+      {:id :enrollment
+       :type :world
+       :summary "Enrollment. The Help. The broken parenthesis."
+       :notes ["The broken parenthesis is the whole book in one gesture."
+               "The MC fixes it, then un-fixes it, then fixes it again."]}]}
+
+    {:scene 2
+     :title "The Activities Fair"
+     :beats
+     [{:id :forms
+       :type :institutional
+       :summary "Ashley and Form 14."
+       :notes ["Ashley is not cruel. She is correct."
+               "The form is the wall."]}
+      {:id :belonging
+       :type :code
+       :summary "The first code cell: belonging.clj."
+       :notes ["The MC tries to compute where he belongs."
+               "The code is small, but it is the first real introspection."]}]}
+
+    {:scene 3
+     :title "Orientation"
+     :beats
+     [{:id :whitlock-orientation
+       :type :world
+       :summary "Whitlock explains the Floor, the founding, the approved history."
+       :notes ["Whitlock is old and sincere."
+               "The approved version is a lie by omission."]}
+      {:id :darkroom
+       :type :character
+       :summary "Maya shows Lena the book."
+       :notes ["The book is Don Quixote."
+               "Eli has already been told."]}
+      {:id :repossession-rumor
+       :type :institutional
+       :summary "The first hint of repossession."
+       :notes ["Not shown. Only mentioned."
+               "The word does not yet have a body."]}]}
+
+    {:scene 4
+     :title "The First Week"
+     :beats
+     [{:id :cs101
+       :type :class
+       :summary "CS 101 with Reyes."
+       :notes ["The MC doesn't know he's unusual."
+               "Maya notices."]}
+      {:id :help
+       :type :code
+       :summary "The Help gives broken code."
+       :notes ["The MC fixes it."
+               "He doesn't understand why no one else does."]}
+      {:id :bennett
+       :type :class
+       :summary "Bennett's class."
+       :notes ["Bennett believes in the codex."
+               "Eli asks a question and is answered too well."]}]}
+
+    {:scene 5
+     :title "The Game"
+     :beats
+     [{:id :dnd-1
+       :type :dnd
+       :summary "Session 1: the missing professor."
+       :notes ["The campaign is already a bureaucracy."
+               "The animal enters the story."]}
+      {:id :storage-room
+       :type :dnd
+       :summary "The storage room. The cage."
+       :notes ["The door is administrative."
+               "The form is on the other side."]}
+      {:id :animal
+       :type :dnd
+       :summary "The animal chooses the MC."
+       :notes ["The animal is not a dog."
+               "It is from the same wrong place as everything else."]}
+      {:id :janitor
+       :type :dnd
+       :summary "The Janitor."
+       :notes ["He is the first person who is not a student, not a teacher."
+               "He exists only at the end of the meeting."]}]}]}
+
+  {:act 2
+   :title "The Semester Takes Shape"
+   :notes ["The MC begins to build systems."
+           "Maya becomes a friend and a measuring stick."
+           "The D&D campaign runs about a week ahead of the story."]
+
+   :scenes
+   [{:scene 1
+     :title "The Second Week"
+     :beats
+     [{:id :maya-study
+       :type :character
+       :summary "MC and Maya study together."
+       :notes ["Maya works harder than anyone."
+               "The MC works differently."]}
+      {:id :widget
+       :type :code
+       :summary "The widget standard emerges."
+       :notes ["Settings as data."
+               "Behavior as function."
+               "Style as presentation."]}
+      {:id :cs102
+       :type :class
+       :summary "The second CS assignment begins."
+       :notes ["The todo list."
+               "The first shared project."]}]}
+
+    {:scene 2
+     :title "In Season"
+     :beats
+     [{:id :dnd-2
+       :type :dnd
+       :summary "Session 2: the toll."
+       :notes ["The toll is a name."
+               "The waif has no name."]}
+      {:id :fight
+       :type :character
+       :summary "MC defends Maya."
+       :notes ["The fight is not large."
+               "The consequence is suspension."]}
+      {:id :porter
+       :type :world
+       :summary "The man who does the refectory floor."
+       :notes ["He knows more than he says."
+               "They bring their own paint."]}]}
+
+    {:scene 3
+     :title "Carrying"
+     :beats
+     [{:id :book
+       :type :character
+       :summary "Maya shows Eli the book."
+       :notes ["It is the first real literature Eli has seen."
+               "The MC does not see it."]}
+      {:id :repossession-2
+       :type :world
+       :summary "Repossession 2."
+       :notes ["Maya and MC witness the process."
+               "The word becomes a body."]}
+      {:id :todo-widget
+       :type :code
+       :summary "The todo widget."
+       :notes ["The first true widget."
+               "The MC and Maya build it together."]}]}
+
+    {:scene 4
+     :title "Guest Night"
+     :beats
+     [{:id :fedora-meeting
+       :type :character
+       :summary "Fedora Society meeting."
+       :notes ["Victor is the Clerk-General."
+               "The documentarian writes everything."]}
+      {:id :lena-maya
+       :type :character
+       :summary "Lena and Maya."
+       :notes ["Lena is not all right."
+               "Maya notices."]}
+      {:id :sliding-puzzle
+       :type :code
+       :summary "The sliding square puzzle."
+       :notes ["A puzzle about constraints."
+               "A game about being one step behind."]}]}
+
+    {:scene 5
+     :title "The Boats"
+     :beats
+     [{:id :supervised-study
+       :type :world
+       :summary "Supervised study."
+       :notes ["The institution watches even rest."]}
+      {:id :bank
+       :type :world
+       :summary "The bank."
+       :notes ["Money is not the point."
+               "Access is."]}
+      {:id :rps
+       :type :code
+       :summary "Rock, paper, scissors."
+       :notes ["A tiny game about the illusion of choice."]}]}]}
+
+  {:act 3
+   :title "The Institution Leans In"
+   :notes ["The institution becomes visible."
+           "The MC's ability is noticed."
+           "The recursive brain begins to show."]
+
+   :scenes
+   [{:scene 1
+     :title "The Infirmary"
+     :beats
+     [{:id :maya-infirmary
+       :type :character
+       :summary "Maya and MC in the infirmary."
+       :notes ["Maya asks about the code."
+               "The MC cannot explain."]}
+      {:id :diagnosis
+       :type :world
+       :summary "MC diagnosis."
+       :notes ["The institution calls it stress."
+               "It is not stress."]}
+      {:id :assessor
+       :type :institutional
+       :summary "The Assessor."
+       :notes ["A person who measures potential."
+               "And decides what to do with it."]}]}
+
+    {:scene 2
+     :title "Second Term"
+     :beats
+     [{:id :holiday
+       :type :world
+       :summary "Holiday break."
+       :notes ["Time off is still inside the system."]}
+      {:id :hollis-docket
+       :type :character
+       :summary "Hollis docket."
+       :notes ["Hollis is a warning."
+               "Not a villain. A preview."]}
+      {:id :pong
+       :type :code
+       :summary "Pong."
+       :notes ["A game against the wall."
+               "The player has no opponent."]}]}
+
+    {:scene 3
+     :title "Breakout"
+     :beats
+     [{:id :parr-threat
+       :type :institutional
+       :summary "Parr threatens MC."
+       :notes ["The institution is not subtle."
+               "But it is never loud."]}
+      {:id :help-array
+       :type :world
+       :summary "Help: array placement."
+       :notes ["The MC learns about the arrays."
+               "The Floor becomes clearer."]}
+      {:id :breakout
+       :type :code
+       :summary "Breakout."
+       :notes ["A game about escaping a room."
+               "But the room is still there."]}]}
+
+    {:scene 4
+     :title "Under the Repository"
+     :beats
+     [{:id :lower-floors
+       :type :world
+       :summary "The lower floors."
+       :notes ["The campus is not built on ground."
+               "The ground is not ground."]}
+      {:id :film-1
+       :type :movie
+       :summary "Film 1."
+       :notes ["The first Meridian film."
+               "The first time the students see the wrongness."]}
+      {:id :repository
+       :type :world
+       :summary "The repository."
+       :notes ["Knowledge is stored."
+               "But not all of it is read."]}]}
+
+    {:scene 5
+     :title "The Bay"
+     :beats
+     [{:id :history-film
+       :type :movie
+       :summary "History film."
+       :notes ["The approved history."
+               "The real history is underneath."]}
+      {:id :lazlo
+       :type :character
+       :summary "Enter Lazlo."
+       :notes ["Lazlo is not a hero."
+               "But he is the first adult who helps."]}
+      {:id :slot-machines
+       :type :code
+       :summary "Slot machines."
+       :notes ["A game about luck."
+               "But the odds are set by someone."]}]}]}
+
+  {:act 4
+   :title "The Wrong Floor"
+   :notes ["The backrooms become a place."
+           "Zell arrives."
+           "The institution starts to lose control."]
+
+   :scenes
+   [{:scene 1
+     :title "Systems, As Laid"
+     :beats
+     [{:id :concert
+       :type :character
+       :summary "First concert."
+       :notes ["Maya and MC at the edge."
+               "The music is approved."]}
+      {:id :fractals
+       :type :code
+       :summary "Fractal shapes."
+       :notes ["A program about recursion."
+               "The MC dreams in recursion."]}]}
+
+    {:scene 2
+     :title "Your Own"
+     :beats
+     [{:id :smoking
+       :type :character
+       :summary "Smoking a room."
+       :notes ["A small act of rebellion."
+               "The institution sees everything."]}
+      {:id :maya-investigated
+       :type :institutional
+       :summary "Maya is investigated."
+       :notes ["The book is found by Reyes."
+               "Reyes does not report it."]}
+      {:id :dunktop
+       :type :code
+       :summary "Dunktop / survey."
+       :notes ["A survey that is not a survey."
+               "A program that asks questions."]}]}
+
+    {:scene 3
+     :title "Dramatic Irony"
+     :beats
+     [{:id :film-3
+       :type :movie
+       :summary "Film 3."
+       :notes ["The movie says too much."
+               "The institution says it's nothing."]}
+      {:id :benefit
+       :type :world
+       :summary "Benefit."
+       :notes ["The institution performs generosity."
+               "The generosity is monitored."]}
+      {:id :paint
+       :type :code
+       :summary "Paint."
+       :notes ["A program about making marks."
+               "But the canvas is never empty."]}]}
+
+    {:scene 4
+     :title "Untitled"
+     :beats
+     [{:id :backrooms-deepen
+       :type :world
+       :summary "The backrooms deepen."
+       :notes ["The school is not a school."
+               "The backrooms are not the basement."]}
+      {:id :institution-notices
+       :type :institutional
+       :summary "The institution notices."
+       :notes ["The institution sends someone."
+               "Not to help. To watch."]}
+      {:id :zell-interest
+       :type :character
+       :summary "Zell's interest grows."
+       :notes ["Zell is not from here."
+               "But he knows the shape of the door."]}]}
+
+    {:scene 5
+     :title "Zell 1"
+     :beats
+     [{:id :monolith
+       :type :world
+       :summary "The monolith."
+       :notes ["A biocomputer in the backrooms."
+               "Cannot move. Cannot die. Cannot stop."]}
+      {:id :escape
+       :type :world
+       :summary "The escape."
+       :notes ["The MC and Maya survive."
+               "But not cleanly."]}
+      {:id :null-field
+       :type :world
+       :summary "Enter the null-field."
+       :notes ["Lazlo's name for the backrooms."
+               "Zell's name is the between."]}]}]}
+
+  {:act 5
+   :title "The First Year Ends"
+   :notes ["The institution closes in."
+           "Eli is lost."
+           "Zell retreats, for now."]
+
+   :scenes
+   [{:scene 1
+     :title "Untitled"
+     :beats
+     [{:id :planning
+       :type :character
+       :summary "Planning the retrieval."
+       :notes ["Maya wants to know what it is."
+               "Lena wants to destroy it."
+               "The MC wants to be done."]}
+      {:id :institution-watches
+       :type :institutional
+       :summary "The institution watches."
+       :notes ["The institution knows more than it says."
+               "It is waiting."]}]}
+
+    {:scene 2
+     :title "Eli Repossessed"
+     :beats
+     [{:id :eli-taken
+       :type :character
+       :summary "Eli is taken."
+       :notes ["The MC sees it happen."
+               "The d20 lands on one."]}
+      {:id :plan-to-save
+       :type :character
+       :summary "The plan to save him."
+       :notes ["Lazlo says it's too late."
+               "But they try anyway."]}
+      {:id :falling-sand
+       :type :code
+       :summary "Falling sand."
+       :notes ["The MC runs the simulation to think."
+               "The sand does not care."]}]}
+
+    {:scene 3
+     :title "The Chase and the Coil"
+     :beats
+     [{:id :chase
+       :type :world
+       :summary "The institution pursues."
+       :notes ["Drones. Quiet. Persistent."
+               "The institution does not run."]}
+      {:id :zell-intercepts
+       :type :character
+       :summary "Zell intercepts."
+       :notes ["He is tired. He is amused."
+               "He was never going to let them go."]}
+      {:id :coil-implanted
+       :type :world
+       :summary "The Origin Coil is implanted."
+       :notes ["The MC feels himself being saved."
+               "And then he feels himself being changed."]}
+      {:id :classes-resume
+       :type :world
+       :summary "Classes resume."
+       :notes ["Eli is absent."
+               "No one speaks of it."]}]}
+
+    {:scene 4
+     :title "The Last Week"
+     :beats
+     [{:id :lazlo-map
+       :type :character
+       :summary "Lazlo gives the map."
+       :notes ["He says it is suicide."
+               "He gives it to them anyway."]}
+      {:id :final-film
+       :type :movie
+       :summary "The final film."
+       :notes ["The film is about light."
+               "The room is dark."]}
+      {:id :eli-attempt
+       :type :character
+       :summary "MC tries to save Eli."
+       :notes ["He sees what is left."
+               "He leaves before they can take him too."]}
+      {:id :game-of-life
+       :type :code
+       :summary "Game of Life."
+       :notes ["The MC runs it all night."
+               "The cells live and die and live."]}]}
+
+    {:scene 5
+     :title "D&D 5"
+     :beats
+     [{:id :final-session
+       :type :dnd
+       :summary "The final D&D session."
+       :notes ["Derek's cleric is repossessed."
+               "Simon keeps the paladin."]}
+      {:id :assignments
+       :type :world
+       :summary "Assignments."
+       :notes ["Maya, Lena, MC all get placed."
+               "The institution says nothing happened."]}
+      {:id :campus-walkable
+       :type :code
+       :summary "The campus, walkable."
+       :notes ["The 3D campus is empty."
+               "The reader walks through it."]}]}]}]}
